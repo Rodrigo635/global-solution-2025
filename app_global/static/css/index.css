@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* HEADER */
+/* Estado padrão */
+.main-header {
+  background-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Força todos os textos/branco dos links dentro do header */
+.main-header .nav-link,
+.main-header .navbar-brand,
+.main-header .logo-icon {
+  color: #fff !important;
+}
+
+/* Quando a classe .scrolled é adicionada */
+.main-header.scrolled {
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Links e ícones ficam pretos */
+.main-header.scrolled .navbar-brand,
+.main-header.scrolled .logo-icon {
+  color: #000 !important;
+}
+
+.main-header.scrolled .nav-link{
+  color: var(--bs-nav-link-color) !important;
+}
+
+.logo-projeto {
+    font-size: 1.4rem;
+}

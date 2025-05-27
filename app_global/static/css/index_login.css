@@ -1,0 +1,83 @@
+.login {
+    height: 100vh;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../imgs/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Formulário */
+.container-input input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  line-height: normal;
+  border: 2px solid rgba(0, 0, 0, 0.3) !important;
+  background: transparent !important;
+  font-size: 1rem;
+  color: var(--bs-nav-link-color) !important;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.container-input input::placeholder {
+  color: var(--bs-nav-link-color);
+  opacity: 0.7;
+}
+
+.invalid-input{
+  border-color: var(--bs-form-invalid-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25) !important;
+}
+
+.container-input label {
+  position: absolute !important;
+  top: 0;
+  left: 15px;
+  transform: translateY(-50%);
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+  background: #fff !important;
+  padding: 0 5px;
+}
+
+.container-input .eye {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  border: none;
+  background: transparent;
+  z-index: 2;
+}
+
+.container-input .eye-icon {
+  display: flex;
+  opacity: 0.4;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  transition: opacity 0.3s ease;
+}
+
+.container-input .eye-icon img {
+  width: 25px;
+  height: 25px;
+}
+
+/* Termos e condições */
+.termos-input  {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.modal-body {
+  max-height: 76vh;
+  overflow-y: auto;
+}
