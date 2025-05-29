@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'app_rotas',
     'app_doacoes',
     'app_alertas',
+    'app_contas',
 ]
 
 MIDDLEWARE = [
