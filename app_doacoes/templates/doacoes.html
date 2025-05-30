@@ -1,11 +1,241 @@
-{% extends 'index2.html' %}
-{% block content %}
-<section class="min-vh-100 py-5">
+{% extends 'index2.html' %} {% block content %}
+<link rel="stylesheet" href="../static/css/doacoes.css" />
+<section class="py-5" id="doacoes">
   <div class="container my-lg-5">
-    <div class="pt-5 pb-3 d-flex align-items-center justify-content-between">
-      <div class="col">
-        <h1>Doações</h1>
+    <form
+      action="/pesquisa"
+      class="d-flex align-items-center m-auto justify-content-center position-relative"
+    >
+      <input
+        type="search"
+        name="busca"
+        id="busca"
+        placeholder="Busque por ONG"
+        class="py-2 px-3 rounded-pill w-100"
+      />
+      <button type="submit" class="btn btn-search position-absolute end-0 me-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="25"
+          height="25"
+          viewBox="0 0 50 50"
+        >
+          <path
+            d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"
+          ></path>
+        </svg>
+      </button>
+    </form>
+    <!-- Seção 1: Precisamos de doadores urgente! -->
+    <div class="pt-5 pb-3">
+      <h2>Precisamos de doadores urgente!</h2>
+      <div class="position-relative">
+        <button
+          class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev"
+          data-carousel="urgente"
+        >
+          &#10094;
+        </button>
+        <div
+          id="carousel-urgente"
+          class="d-flex overflow-hidden gap-3 py-3 position-relative px-md-5 carousel-container"
+          style="scroll-behavior: smooth"
+        >
+          {% for i in "x"|rjust:10 %}
+          <div class="card" style="min-width: 250px">
+            <div class="card-img-top bg-danger" style="height: 140px"></div>
+            <div class="card-body">
+              <h5 class="card-title">ONG {{ forloop.counter }}</h5>
+              <p class="card-text">
+                Descrição curta da ONG com informações relevantes sobre suas
+                necessidades
+              </p>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="#" class="btn btn-primary">Ver mais</a>
+                <a href="#" class="btn btn-success" target="_blank"
+                  >Quero doar</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"
+          data-carousel="urgente"
+        >
+          &#10095;
+        </button>
       </div>
     </div>
+
+    <!-- Seção 2: Sugestões -->
+    <div class="pt-5 pb-3">
+      <h2>Sugestões</h2>
+      <div class="position-relative">
+        <button
+          class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev z-high"
+          data-carousel="sugestoes"
+        >
+          &#10094;
+        </button>
+        <div
+          id="carousel-sugestoes"
+          class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
+          style="scroll-behavior: smooth"
+        >
+          {% for i in "x"|rjust:10 %}
+          <div class="card" style="min-width: 250px">
+            <div class="card-img-top bg-info" style="height: 140px"></div>
+            <div class="card-body">
+              <h5 class="card-title">ONG Sugerida {{ forloop.counter }}</h5>
+              <p class="card-text">
+                Esta é uma sugestão baseada no seu histórico de doações
+              </p>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="#" class="btn btn-primary">Ver mais</a>
+                <a href="#" class="btn btn-success" target="_blank"
+                  >Quero doar</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"
+          data-carousel="sugestoes"
+        >
+          &#10095;
+        </button>
+      </div>
+    </div>
+
+    <!-- Seção 3: Explorar -->
+    <div class="pt-5 pb-3">
+      <h2>Explorar</h2>
+      <div class="mb-3">
+        <label for="filtroCategoria" class="form-label"
+          >Filtrar por categoria:</label
+        >
+        <select id="filtroCategoria" class="form-select w-auto d-inline-block">
+          <option value="todas">Todas</option>
+          <option value="criancas">Crianças</option>
+          <option value="animais">Animais</option>
+          <option value="meio-ambiente">Meio Ambiente</option>
+          <option value="educacao">Educação</option>
+        </select>
+      </div>
+
+      <div class="position-relative">
+        <button
+          class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev z-high"
+          data-carousel="explorar"
+        >
+          &#10094;
+        </button>
+        <div
+          id="carousel-explorar"
+          class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
+          style="scroll-behavior: smooth"
+        >
+          {% for i in "x"|rjust:10 %}
+          <div class="card" style="min-width: 250px">
+            <div class="card-img-top bg-success" style="height: 140px"></div>
+            <div class="card-body">
+              <h5 class="card-title">
+                ONG para Explorar {{ forloop.counter }}
+              </h5>
+              <p class="card-text">
+                Conheça novas organizações que precisam de ajuda
+              </p>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="#" class="btn btn-primary">Ver mais</a>
+                <a href="#" class="btn btn-success" target="_blank"
+                  >Quero doar</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"
+          data-carousel="explorar"
+        >
+          &#10095;
+        </button>
+      </div>
+    </div>
+    <div>
+      <a
+        href="#"
+        class="btn btn-primary d-flex align-items-center gap-2 justify-content-center mx-auto"
+        id="verMais"
+      >
+        <span>Ver mais</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 -960 960 960"
+          width="24px"
+          fill="#e3e3e3"
+        >
+          <path
+            d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
 </section>
+
+<script>
+  // Função para configurar cada carrossel
+  function setupCarousel(carouselId) {
+    const container = document.getElementById(`carousel-${carouselId}`);
+    const prevBtn = document.querySelector(
+      `.carousel-prev[data-carousel="${carouselId}"]`
+    );
+    const nextBtn = document.querySelector(
+      `.carousel-next[data-carousel="${carouselId}"]`
+    );
+
+    if (!container || !prevBtn || !nextBtn) return;
+
+    const scrollAmount = () => {
+      const card = container.querySelector(".card");
+      return card ? (card.offsetWidth + 12) * 3 : 600;
+    };
+
+    prevBtn.onclick = (e) => {
+      e.stopPropagation();
+      container.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+    };
+
+    nextBtn.onclick = (e) => {
+      e.stopPropagation();
+      container.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+    };
+  }
+
+  // Configura todos os carrosseis
+  document.addEventListener("DOMContentLoaded", () => {
+    ["urgente", "sugestoes", "explorar"].forEach(setupCarousel);
+
+    // Efeitos de hover
+    document.querySelectorAll(".card").forEach((card) => {
+      card.onmouseenter = () => {
+        card.style.transform = "scale(1.05)";
+      };
+
+      card.onmouseleave = () => {
+        card.style.transform = "scale(1)";
+      };
+    });
+  });
+</script>
+
 {% endblock %}
