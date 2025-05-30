@@ -108,9 +108,9 @@ def criar_ong():
 
 def main():
     if sys.platform == "win32":
-        VENV_PYTHON = os.path.join(os.getcwd(), 'venv', 'Scripts', 'python.exe')
+        VENV_PYTHON = os.path.join(os.getcwd(), 'env', 'Scripts', 'python.exe')
         DELETE_DB_CMD = 'del db.sqlite3'
-        DELETE_MIGRATIONS_CMD = 'del /Q "{}/migrations/0*.py"'
+        DELETE_MIGRATIONS_CMD = 'del "{}\\migrations\\0*.py"'
     else:
         VENV_PYTHON = os.path.join(os.getcwd(), 'venv', 'bin', 'python')
         DELETE_DB_CMD = 'rm -f db.sqlite3'
@@ -122,7 +122,7 @@ def main():
         print(f"❌ Python do venv não encontrado em {VENV_PYTHON}")
         sys.exit(1)
 
-    caminhos = ["app_contas", "app_rotas", "app_doacoes", "app_alertas", "projeto_global"]
+    caminhos = ["app_contas", "app_rotas", "app_doacoes", "app_alertas"]
     for caminho in caminhos:
         print(f"🧹 Removendo migrações antigas em {caminho}/migrations...")
         run(DELETE_MIGRATIONS_CMD.format(caminho))
