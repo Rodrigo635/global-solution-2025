@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Categoria
+from .models import Categoria, OngProfile
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -14,12 +14,19 @@ class DoadorRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
 
+    imagem = forms.ImageField(
+        required=True,
+        help_text='Formatos aceitos: JPG, PNG. Tamanho máximo: 5MB'
+    )
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'cidade']
+        fields = ['username', 'email', 'password', 'cidade', 'imagem']
 
     def clean(self):
         cleaned_data = super().clean()
+        cleaned_data['tipo'] = 'pessoa'
+        print(cleaned_data)
         return cleaned_data
 
 class OngRegistrationForm(forms.ModelForm):
@@ -36,19 +43,41 @@ class OngRegistrationForm(forms.ModelForm):
     bairro = forms.CharField(max_length=100)
     numero = forms.CharField(max_length=10)
     complemento = forms.CharField(max_length=100, required=False)
-    site = forms.URLField(required=False)
+    site = forms.URLField(required=True)
+
     categorias = forms.ModelMultipleChoiceField(
         queryset=Categoria.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
-        required=False
+        required=True
+    )
+    
+
+    pix = forms.CharField(
+        max_length=100,
+        required=False,
+        label='Chave PIX'
+    )
+
+    pixTipo = forms.ChoiceField(
+        choices=OngProfile.TIPO_CHAVE_PIX,
+        required=False,
+        label='Tipo de Chave PIX',
+        widget=forms.Select(attrs={'class': 'form-select'})
+    )
+
+    imagem = forms.ImageField(
+        required=True,
+        label='Logo/Marca da ONG',
+        help_text='Formatos aceitos: JPG, PNG. Tamanho máximo: 5MB'
     )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'cidade']
+        fields = ['username', 'email', 'password', 'cidade', 'imagem']
 
     def clean(self):
         cleaned_data = super().clean()
+        cleaned_data['tipo'] = 'ong'
         print(cleaned_data)
         return cleaned_data
     

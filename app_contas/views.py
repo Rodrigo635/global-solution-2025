@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.shortcuts import render
 from .forms import *
 from django.contrib.auth import get_user_model
@@ -38,20 +39,14 @@ def login_view(request):
 def registerDonor(request):
     print("Entrou no registerDonor")
     if request.method == 'POST':
-        print("Entrou no POST")
-        form = DoadorRegistrationForm(request.POST)
-        print("Form criado")
+        form = DoadorRegistrationForm(request.POST, request.FILES)
         print(form.is_valid())
         if form.is_valid():
-            print("Entrou no if")
             user = form.save(commit=False)
-            print("User criado")
             user.set_password(form.cleaned_data['password'])
-            print("Senha criada")
+            user.tipo = form.cleaned_data.get('tipo')
             user.save()
-            print("User salvo")
             auth_login(request, user)
-            print("Entrou no auth_login")
             return redirect('inicio')
         
     else:
@@ -59,39 +54,46 @@ def registerDonor(request):
     
     return render(request, 'registerDonor.html', {'form': form})
 
-
 def registerOng(request):
     if request.method == 'POST':
-        form = OngRegistrationForm(request.POST)
-        print(form.is_valid())
-        print(form.errors)
+        form = OngRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            
-            # Criar perfil da ONG
-            OngProfile.objects.create(
-                user=user,
-                cnpj=form.cleaned_data['cnpj'],
-                descricao=form.cleaned_data['descricao'],
-                telefone=form.cleaned_data['telefone'],
-                endereco=form.cleaned_data['endereco'],
-                estado=form.cleaned_data['estado'],
-                cep=form.cleaned_data['cep'],
-                bairro=form.cleaned_data['bairro'],
-                numero=form.cleaned_data['numero'],
-                complemento=form.cleaned_data.get('complemento', ''),
-                site=form.cleaned_data.get('site')
-            )
-            
-            # Adicionar categorias
-            user.ongprofile.categorias.set(form.cleaned_data['categorias'])
-            
-            auth_login(request, user)
-            return redirect('inicio')  # Ajuste para sua URL
+            try:
+                with transaction.atomic():
+                    user = form.save(commit=False)
+                    user.set_password(form.cleaned_data['password'])
+                    user.tipo = form.cleaned_data.get('tipo')
+                    user.save()
+
+                    ong = OngProfile.objects.create(
+                        user=user,
+                        cnpj=form.cleaned_data['cnpj'],
+                        descricao=form.cleaned_data['descricao'],
+                        telefone=form.cleaned_data['telefone'],
+                        endereco=form.cleaned_data['endereco'],
+                        estado=form.cleaned_data['estado'],
+                        cep=form.cleaned_data['cep'],
+                        bairro=form.cleaned_data['bairro'],
+                        numero=form.cleaned_data['numero'],
+                        complemento=form.cleaned_data.get('complemento', ''),
+                        pix=form.cleaned_data.get('pix'),
+                        pixTipo=form.cleaned_data.get('pixTipo'),
+                        site=form.cleaned_data.get('site')
+                    )
+
+                    ong.categorias.set(form.cleaned_data['categorias'])
+
+                    auth_login(request, user)
+                    return redirect('inicio')
+
+            except Exception as e:
+                form.add_error(None, f"Ocorreu um erro ao salvar a ONG: {e}")
+        else:
+            print(form.errors)
+
     else:
         form = OngRegistrationForm()
+
     return render(request, 'registerOng.html', {'form': form})
 
 def logout_view(request):

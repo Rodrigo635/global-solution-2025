@@ -18,7 +18,7 @@ def create_superuser():
 
     User = get_user_model()
     username = 'admin'
-    email = 'admin@admin.com'
+    email = 'admin@admin.adm'
     password = 'admin'
 
     if not User.objects.filter(username=username).exists():
@@ -92,6 +92,8 @@ def criar_ong():
             bairro='Jardim das Esperanças',
             numero='123',
             complemento='Sala 5',
+            pix='pix.pix@pix.pix',
+            pixTipo='Email',
             site='https://www.ongesperanca.org',
             emergencia=True,
             data_criacao=now()

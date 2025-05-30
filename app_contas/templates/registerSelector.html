@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+
 <section class="vh-100 d-flex align-items-center bg-light">
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -18,11 +21,11 @@
             
             <!-- Botões de seleção -->
             <div class="d-grid gap-3">
-              <a href="{% url 'contas:registerDonor' %}" class="btn btn-primary btn-lg py-3 rounded-3">
+              <a href="{% url 'contas:registerDonor' %}" class="btn btn-primary btn-lg py-3 rounded-3 text-decoration-none">
                 <i class="bi bi-person-heart me-2"></i> Sou Doador
               </a>
               
-              <a href="{% url 'contas:registerOng' %}" class="btn btn-success btn-lg py-3 rounded-3">
+              <a href="{% url 'contas:registerOng' %}" class="btn btn-success btn-lg py-3 rounded-3 text-decoration-none">
                 <i class="bi bi-people-fill me-2"></i> Sou ONG
               </a>
             </div>
@@ -37,33 +40,4 @@
     </div>
   </div>
 </section>
-
-<style>
-  .card {
-    border: none;
-    overflow: hidden;
-  }
-  
-  .btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    transition: all 0.3s;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0b5ed7;
-    transform: translateY(-2px);
-  }
-  
-  .btn-success {
-    background-color: #198754;
-    border-color: #198754;
-    transition: all 0.3s;
-  }
-  
-  .btn-success:hover {
-    background-color: #157347;
-    transform: translateY(-2px);
-  }
-</style>
 {% endblock %}

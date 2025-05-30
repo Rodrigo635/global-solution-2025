@@ -3,6 +3,9 @@
 {% load form_filters %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+
 <section class="vh-100 d-flex align-items-center bg-light">
   <div class="container py-5">
     <div class="row justify-content-center">
@@ -18,7 +21,7 @@
           </div>
           
           <div class="card-body p-4 p-xl-5">
-            <form method="post" class="needs-validation" id="form-cadastro">
+            <form method="post" class="needs-validation" id="form-cadastro" enctype="multipart/form-data">
               {% csrf_token %}
               
               <!-- Campo de nome -->
@@ -66,6 +69,20 @@
                 </div>
               </div>
               
+              <!-- Seção de Imagem -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-image me-2"></i> Imagem de perfil</h5>
+
+                    <div class="form-floating">
+                      <div class="custom-file">
+                        {{ form.imagem|add_class:"form-control rounded-3" }}
+                        <label class="form-label" for="{{ form.imagem.id_for_label }}"></label>
+                        {{ form.imagem.errors }}
+                      </div>
+                      <small class="text-muted">Formatos aceitos: JPG, PNG. Tamanho máximo: 5MB</small>
+                    </div>
+                  </div>
+
               <!-- Termos e Condições -->
               <div class="form-check mb-4">
                 <input class="form-check-input border-primary" type="checkbox" id="termos" required>
@@ -92,58 +109,4 @@
     </div>
   </div>
 </section>
-
-{% endblock %}
-
-{% block extra_css %}
-<style>
-  /* Estilos personalizados */
-  .card {
-    border: none;
-    transition: transform 0.3s;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .form-control, .form-select {
-    border: 1px solid #0d6efd;
-  }
-  
-  .form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    border-color: #0d6efd;
-  }
-  
-  .form-floating>label {
-    color: #979797;
-    padding: 1rem 1.25rem;
-  }
-  
-  .btn-primary {
-    background-color: #0d6efd;
-    border: none;
-    transition: all 0.3s;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0b5ed7;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  a {
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  .bg-gradient {
-    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
-  }
-</style>
 {% endblock %}
