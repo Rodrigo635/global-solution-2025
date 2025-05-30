@@ -1,0 +1,276 @@
+{% extends "index_login.html" %}
+{% load static %}
+{% load form_filters %}
+
+{% block content %}
+<section class="h-auto d-flex align-items-center bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">  <!-- Largura maior (8 colunas) -->
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <div class="row g-0">
+
+            <!-- Coluna do formulário -->
+            <div class="col-md-12">
+              <div class="card-body p-4 p-xl-5">
+                <div class="text-center mb-4">
+                  <img src="{% static 'img/logo-ong.png' %}" alt="Logo" width="80" class="mb-3">
+                  <h2 class="fw-bold text-primary">Cadastro para ONGs</h2>
+                  <p class="text-muted">Preencha os dados da sua organização</p>
+                </div>
+
+                <form method="post" class="needs-validation" novalidate>
+                  {% csrf_token %}
+                  
+                  <!-- Seção de Dados Básicos -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-building me-2"></i> Dados da Organização</h5>
+                    
+                    <div class="row g-3">
+                      <!-- Nome da ONG -->
+                      <div class="col-12">
+                        <div class="form-floating">
+                          {{ form.username|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.username.id_for_label }}">Nome da ONG</label>
+                          {{ form.username.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- CNPJ -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.cnpj|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.cnpj.id_for_label }}">CNPJ</label>
+                          {{ form.cnpj.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Telefone -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.telefone|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.telefone.id_for_label }}">Telefone</label>
+                          {{ form.telefone.errors }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Seção de Contato -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-envelope me-2"></i> Contato</h5>
+                    
+                    <div class="row g-3">
+                      <!-- Email -->
+                      <div class="col-12">
+                        <div class="form-floating">
+                          {{ form.email|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.email.id_for_label }}">E-mail Institucional</label>
+                          {{ form.email.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Site -->
+                      <div class="col-12">
+                        <div class="form-floating">
+                          {{ form.site|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.site.id_for_label }}">Site (opcional)</label>
+                          {{ form.site.errors }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Seção de Endereço -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-geo-alt me-2"></i> Endereço</h5>
+                    
+                    <div class="row g-3">
+                      <!-- CEP -->
+                      <div class="col-md-4">
+                        <div class="form-floating">
+                          {{ form.cep|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.cep.id_for_label }}">CEP</label>
+                          {{ form.cep.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Estado -->
+                      <div class="col-md-4">
+                        <div class="form-floating">
+                          {{ form.estado|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.estado.id_for_label }}">Estado</label>
+                          {{ form.estado.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Cidade -->
+                      <div class="col-md-4">
+                        <div class="form-floating">
+                          {{ form.cidade|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.cidade.id_for_label }}">Cidade</label>
+                          {{ form.cidade.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Endereço -->
+                      <div class="col-md-8">
+                        <div class="form-floating">
+                          {{ form.endereco|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.endereco.id_for_label }}">Endereço</label>
+                          {{ form.endereco.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Número -->
+                      <div class="col-md-4">
+                        <div class="form-floating">
+                          {{ form.numero|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.numero.id_for_label }}">Número</label>
+                          {{ form.numero.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Bairro -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.bairro|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.bairro.id_for_label }}">Bairro</label>
+                          {{ form.bairro.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Complemento -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.complemento|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.complemento.id_for_label }}">Complemento</label>
+                          {{ form.complemento.errors }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Seção de Segurança -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-shield-lock me-2"></i> Segurança</h5>
+                    
+                    <div class="row g-3">
+                      <!-- Senha -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.password|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.password.id_for_label }}">Senha</label>
+                          {{ form.password.errors }}
+                        </div>
+                      </div>
+                      
+                      <!-- Confirmar Senha -->
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          {{ form.confirm_password|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.confirm_password.id_for_label }}">Confirmar Senha</label>
+                          {{ form.confirm_password.errors }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Seção de Descrição -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-text-paragraph me-2"></i> Sobre a ONG</h5>
+                    
+                    <div class="form-floating">
+                      {{ form.descricao|add_class:"form-control rounded-3"}}
+                      <label for="{{ form.descricao.id_for_label }}">Descrição da ONG</label>
+                      {{ form.descricao.errors }}
+                    </div>
+                  </div>
+                  
+                  <!-- Seção de Categorias -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3"><i class="bi bi-tags me-2"></i> Áreas de Atuação</h5>
+                    
+                    <div class="border rounded-3 p-3">
+                      {{ form.categorias.errors }}
+                      <div class="row">
+                        {% for checkbox in form.categorias %}
+                        <div class="col-md-6 mb-2">
+                          <div class="form-check">
+                            {{ checkbox.tag }}
+                            <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                              {{ checkbox.choice_label }}
+                            </label>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Termos e Condições -->
+                  <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="termos" required>
+                    <label class="form-check-label" for="termos">
+                      Concordo com os <a href="#" data-bs-toggle="modal" data-bs-target="#termosModal">Termos de Uso</a> e <a href="#" data-bs-toggle="modal" data-bs-target="#condicoesModal">Políticas de Privacidade</a>
+                    </label>
+                  </div>
+                  
+                  <!-- Botão de Cadastro -->
+                  <div class="d-grid">
+                    <button class="btn btn-primary btn-lg rounded-3 py-3 fw-bold" type="submit">
+                      <i class="bi bi-check-circle me-2"></i> Cadastrar ONG
+                    </button>
+                  </div>
+                  
+                  <div class="text-center mt-3">
+                    <p class="mb-0">Já possui cadastro? <a href="{% url 'contas:login' %}" class="text-decoration-none">Faça login</a></p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modais (mantenha os mesmos do seu template original) -->
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .form-floating>label {
+    padding: 1rem 1.25rem;
+  }
+  
+  .form-control, .form-select {
+    border-radius: 0.5rem !important;
+    padding: 1rem 1.25rem;
+    height: auto;
+  }
+  
+  .card {
+    border: none;
+  }
+  
+  .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.15em;
+  }
+  
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+</style>
+{% endblock %}
