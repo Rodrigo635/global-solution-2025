@@ -10,8 +10,9 @@ db.sqlite3
 media/
 
 # Compilados do Python
-__pycache__/
+**/__pycache__/
 **/migrations/
+*/migrations/__pycache__/
 *.py[cod]
 
 # Arquivos de log e temporários
