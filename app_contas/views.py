@@ -47,7 +47,6 @@ def registerDonor(request):
             user.tipo = form.cleaned_data.get('tipo')
             user.save()
             user.categorias.set(form.cleaned_data['categorias'])
-            user.save()
             auth_login(request, user)
             return redirect('inicio')
         
@@ -59,16 +58,37 @@ def registerDonor(request):
 def registerOng(request):
     if request.method == 'POST':
         form = OngRegistrationForm(request.POST, request.FILES)
-        if form.is_valid():
+        
+        # Validação manual das imagens antes de processar o form
+        gallery_images = request.FILES.getlist('gallery_images')
+        image_errors = []
+        
+        if len(gallery_images) > 6:
+            image_errors.append("Máximo de 6 imagens permitidas.")
+        
+        for img in gallery_images:
+            if img.size > 5 * 1024 * 1024:
+                image_errors.append(f"A imagem '{img.name}' excede o tamanho máximo de 5MB.")
+            
+            if not img.content_type.startswith('image/'):
+                image_errors.append(f"O arquivo '{img.name}' não é uma imagem válida.")
+        
+        # Se há erros nas imagens, adicione ao form
+        if image_errors:
+            for error in image_errors:
+                form.add_error('gallery_images', error)
+        
+        if form.is_valid() and not image_errors:
             try:
                 with transaction.atomic():
+                    # Salvar usuário
                     user = form.save(commit=False)
                     user.set_password(form.cleaned_data['password'])
                     user.tipo = form.cleaned_data.get('tipo')
                     user.save()
                     user.categorias.set(form.cleaned_data['categorias'])
-                    user.save()
-
+                    
+                    # Salvar perfil da ONG
                     ong = OngProfile.objects.create(
                         user=user,
                         cnpj=form.cleaned_data['cnpj'],
@@ -84,17 +104,28 @@ def registerOng(request):
                         pixTipo=form.cleaned_data.get('pixTipo'),
                         site=form.cleaned_data.get('site')
                     )
+                    
+                    # Salvar imagens da galeria
+                    for img in gallery_images:
+                        if img:
+                            obj= GalleryImage.objects.create(
+                                image=img,
+                                ong=ong
+                            )
+                            ong.gallery_images.add(obj)
+                    
                     auth_login(request, user)
                     return redirect('inicio')
-
+                    
             except Exception as e:
-                form.add_error(None, f"Ocorreu um erro ao salvar a ONG: {e}")
+                print(f"Erro detalhado: {e}")
         else:
-            print(form.errors)
-
+            print("Erros do form:", form.errors)
+            if image_errors:
+                print("Erros das imagens:", image_errors)
     else:
         form = OngRegistrationForm()
-
+    
     return render(request, 'registerOng.html', {'form': form})
 
 def logout_view(request):

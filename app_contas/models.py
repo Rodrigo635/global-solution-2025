@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 
 
@@ -11,13 +11,36 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nome
 
+class CustomUnicodeUsernameValidator(UnicodeUsernameValidator):
+    regex = r'^[\w\s.@+-]+$'  # Adicionado \s para permitir espaços
+    message = 'Digite um nome válido. Este valor pode conter apenas letras, números, espaços e os caracteres @/./+/-/_.'
+
 
 class CustomUser(AbstractUser):
+    # Sobrescrever o campo username com validador customizado
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        validators=[CustomUnicodeUsernameValidator()],
+        error_messages={
+            'unique': "Já existe um usuário com este nome.",
+        },
+        verbose_name='Nome de usuário'
+    )
+
     # Campos comuns a todos
     categorias = models.ManyToManyField('Categoria', blank=False)
     imagem = models.ImageField(upload_to='imagens/', blank=True, null=True)
     cidade = models.CharField(max_length=100)
     tipo = models.CharField(max_length=10, choices=(('pessoa', 'Pessoa'), ('ong', 'ONG')))
+
+class GalleryImage(models.Model):
+    image = models.ImageField(upload_to='ong_gallery/')
+    ong = models.ForeignKey('OngProfile', related_name='gallery_images', on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-uploaded_at']
 
 
 class OngProfile(models.Model):
@@ -43,3 +66,15 @@ class OngProfile(models.Model):
     pixTipo = models.CharField(max_length=15, choices=TIPO_CHAVE_PIX, blank=True, null=True)
     emergencia = models.BooleanField(default=False)
     data_criacao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"ONG: {self.user.username}"
+    
+    @property
+    def gallery_count(self):
+        """Retorna o número de imagens na galeria"""
+        return self.gallery_images.count()
+    
+    def get_featured_image(self):
+        """Retorna a primeira imagem da galeria como imagem destacada"""
+        return self.gallery_images.first()

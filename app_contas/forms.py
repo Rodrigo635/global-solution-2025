@@ -2,6 +2,7 @@
 from django import forms
 from .models import Categoria, OngProfile
 from django.contrib.auth import get_user_model
+from multiupload.fields import MultiFileField
 
 User = get_user_model()
 
@@ -56,6 +57,15 @@ class OngRegistrationForm(forms.ModelForm):
     numero = forms.CharField(max_length=10)
     complemento = forms.CharField(max_length=100, required=False)
     site = forms.URLField(required=False)
+
+    gallery_images = MultiFileField(
+        min_num=0,
+        max_num=6,
+        max_file_size=1024*1024*5,  # 5MB
+        required=False,
+        label='Galeria de Fotos (Máx. 6)',
+        help_text='Selecione até 6 imagens para a galeria. Formatos aceitos: JPG, PNG. Tamanho máximo por imagem: 5MB'
+    )
 
     categorias = forms.ModelMultipleChoiceField(
         queryset=Categoria.objects.all(),

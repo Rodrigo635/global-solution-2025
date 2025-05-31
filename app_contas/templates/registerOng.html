@@ -1,6 +1,7 @@
 {% extends "index_login.html" %} {% load static %} {% load form_filters %} {% block content %}
-
+<script src="{% static 'js/Gallery.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}" />
 
 <section class="h-auto d-flex align-items-center bg-light">
   <div class="container py-5">
@@ -141,6 +142,44 @@
                           Remover imagem
                         </button>
                       </div>
+                    </div>
+                  </div>
+
+                  <!-- Seção de Galeria -->
+                  <div class="mb-4">
+                    <h5 class="fw-bold text-primary mb-3">
+                      <i class="bi bi-images me-2"></i>
+                      Galeria de Fotos (Máximo 6 imagens)
+                    </h5>
+
+                    <div class="form-group">
+                      <!-- Área de Upload -->
+                      <div class="upload-area" id="uploadArea">
+                        <i class="bi bi-cloud-upload fs-1 text-muted mb-2"></i>
+                        <p class="mb-1"><strong>Clique aqui ou arraste as imagens</strong></p>
+                        <small class="text-muted">
+                          Formatos aceitos: JPG, PNG. Máximo 5MB por imagem
+                        </small>
+                      </div>
+
+                      <!-- Erros do Django Form -->
+                      {% if form.gallery_images.errors %}
+                      <div class="error-message">
+                        {% for error in form.gallery_images.errors %}
+                        <div>{{ error }}</div>
+                        {% endfor %}
+                      </div>
+                      {% endif %}
+                    </div>
+
+                    <!-- Preview da galeria -->
+                    <div id="galleryPreviewContainer" class="mt-3" style="display: none">
+                      <div class="row g-2" id="galleryPreviews">
+                        <!-- Miniaturas das imagens via JavaScript -->
+                      </div>
+                      <small id="galleryCount" class="text-muted d-block mt-2">
+                        0/6 imagens selecionadas
+                      </small>
                     </div>
                   </div>
 
