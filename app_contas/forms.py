@@ -14,6 +14,12 @@ class DoadorRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
 
+    categorias = forms.ModelMultipleChoiceField(
+        queryset=Categoria.objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+        required=True
+    )
+
     imagem = forms.ImageField(
         required=True,
         help_text='Formatos aceitos: JPG, PNG. Tamanho máximo: 5MB'
@@ -21,7 +27,7 @@ class DoadorRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'cidade', 'imagem']
+        fields = ['username', 'email', 'password', 'cidade', 'imagem', 'categorias']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -79,7 +85,7 @@ class OngRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'cidade', 'imagem']
+        fields = ['username', 'email', 'password', 'cidade', 'imagem', 'categorias']
 
     def clean(self):
         cleaned_data = super().clean()

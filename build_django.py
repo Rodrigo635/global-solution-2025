@@ -69,7 +69,6 @@ def criar_ong():
 
     if not User.objects.filter(username=username).exists():
         print(f"\n✨ Criando usuário para ONG '{username}'...")
-
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -77,6 +76,9 @@ def criar_ong():
             cidade='São Paulo',
             tipo='ong',
             )
+        
+        categorias = Categoria.objects.filter(nome__in=['Educação', 'Assistência Social'])
+        user.categorias.set(categorias)  # Para ManyToMany direto no User
 
         print("✅ Usuário criado com sucesso!")
 
@@ -99,8 +101,7 @@ def criar_ong():
             data_criacao=now()
         )
 
-        categorias = Categoria.objects.filter(nome__in=['Educação', 'Assistência Social'])
-        ong.categorias.set(categorias)
+
         print("✅ ONG criada com categorias associadas!")
 
     else:

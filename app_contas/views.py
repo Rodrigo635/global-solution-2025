@@ -46,6 +46,8 @@ def registerDonor(request):
             user.set_password(form.cleaned_data['password'])
             user.tipo = form.cleaned_data.get('tipo')
             user.save()
+            user.categorias.set(form.cleaned_data['categorias'])
+            user.save()
             auth_login(request, user)
             return redirect('inicio')
         
@@ -64,6 +66,8 @@ def registerOng(request):
                     user.set_password(form.cleaned_data['password'])
                     user.tipo = form.cleaned_data.get('tipo')
                     user.save()
+                    user.categorias.set(form.cleaned_data['categorias'])
+                    user.save()
 
                     ong = OngProfile.objects.create(
                         user=user,
@@ -80,9 +84,6 @@ def registerOng(request):
                         pixTipo=form.cleaned_data.get('pixTipo'),
                         site=form.cleaned_data.get('site')
                     )
-
-                    ong.categorias.set(form.cleaned_data['categorias'])
-
                     auth_login(request, user)
                     return redirect('inicio')
 

@@ -14,6 +14,7 @@ class Categoria(models.Model):
 
 class CustomUser(AbstractUser):
     # Campos comuns a todos
+    categorias = models.ManyToManyField('Categoria', blank=False)
     imagem = models.ImageField(upload_to='imagens/', blank=True, null=True)
     cidade = models.CharField(max_length=100)
     tipo = models.CharField(max_length=10, choices=(('pessoa', 'Pessoa'), ('ong', 'ONG')))
@@ -30,7 +31,6 @@ class OngProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     cnpj = models.CharField(max_length=18)
     descricao = models.TextField()
-    categorias = models.ManyToManyField('Categoria', blank=False)
     telefone = models.CharField(max_length=20)
     endereco = models.CharField(max_length=200)
     estado = models.CharField(max_length=2)
