@@ -1,11 +1,17 @@
 .hero {
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.1)
-    ),
-    url("../imgs/hero.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: black;
+}
+
+.btn-estilizado {
+  background-color: var(--azul-claro);
+  border-color: var(--azul-claro);
+}
+
+@media screen and (max-width: 992px) {
+  .hero {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)), url('../imgs/planeta.png');
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+  }
 }
