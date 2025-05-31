@@ -26,7 +26,7 @@ def login_view(request):
                     request, username=username, password=password)
                 if user is not None:
                     auth_login(request, user)
-                    return redirect(request.GET.get('next', 'inicio'))
+                    return redirect(request.GET.get('next', 'home'))
                 else:
                     form.add_error(None, 'Email ou senha incorretos')
             except User.DoesNotExist:
@@ -48,7 +48,7 @@ def registerDonor(request):
             user.save()
             user.categorias.set(form.cleaned_data['categorias'])
             auth_login(request, user)
-            return redirect('inicio')
+            return redirect('home')
         
     else:
         form = DoadorRegistrationForm()
@@ -115,7 +115,7 @@ def registerOng(request):
                             ong.gallery_images.add(obj)
                     
                     auth_login(request, user)
-                    return redirect('inicio')
+                    return redirect('home')
                     
             except Exception as e:
                 print(f"Erro detalhado: {e}")

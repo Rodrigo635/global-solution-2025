@@ -1,3 +1,9 @@
+:root {
+  --azul-claro: #4261BA;
+  --azul-escuro: #0D0C49;
+  --cinza-claro: #D9D9D9;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,6 +15,7 @@ a {
 }
 
 .main-header {
+    background-color: var(--azul-escuro);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 

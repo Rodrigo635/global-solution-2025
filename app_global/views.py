@@ -11,11 +11,4 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods
 
 def home(request):
-    if request.user.is_authenticated:
-        return redirect('inicio')
-    else:
-        return render(request, 'home.html')
-
-@login_required
-def inicio(request):
-    return render(request, 'inicio.html')
+    return render(request, 'home.html')
