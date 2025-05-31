@@ -25,10 +25,16 @@ class DoadorRegistrationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            self.add_error('password', "As senhas não coincidem")
+
         cleaned_data['tipo'] = 'pessoa'
         print(cleaned_data)
         return cleaned_data
-
+    
 class OngRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
@@ -43,7 +49,7 @@ class OngRegistrationForm(forms.ModelForm):
     bairro = forms.CharField(max_length=100)
     numero = forms.CharField(max_length=10)
     complemento = forms.CharField(max_length=100, required=False)
-    site = forms.URLField(required=True)
+    site = forms.URLField(required=False)
 
     categorias = forms.ModelMultipleChoiceField(
         queryset=Categoria.objects.all(),
@@ -77,6 +83,13 @@ class OngRegistrationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            self.add_error('password', "As senhas não coincidem")
+
         cleaned_data['tipo'] = 'ong'
         print(cleaned_data)
         return cleaned_data
