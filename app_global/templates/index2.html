@@ -23,7 +23,8 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- Minha CSS -->
-    <link rel="stylesheet" href="../static/css/index2.css">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index2.css' %}">
 
 </head>
 
@@ -67,7 +68,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'contas:logout' %}">Sair</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -1,0 +1,149 @@
+{% extends "index_login.html" %}
+{% load static %}
+{% load form_filters %}
+
+{% block content %}
+<section class="vh-100 d-flex align-items-center bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            
+          <!-- Cabeçalho com gradiente azul -->
+          <div class="card-header bg-primary bg-gradient text-white py-4">
+            <div class="text-center">
+              <h2 class="fw-bold mb-1">Faça seu cadastro</h2>
+              <p class="mb-0">Junte-se a nossa comunidade</p>
+            </div>
+          </div>
+          
+          <div class="card-body p-4 p-xl-5">
+            <form method="post" class="needs-validation" id="form-cadastro">
+              {% csrf_token %}
+              
+              <!-- Campo de nome -->
+              <div class="mb-4">
+                <div class="form-floating">
+                  {{ form.username|add_class:"form-control rounded-3" }}
+                  <label for="{{ form.username.id_for_label }}" class="">Nome</label>
+                </div>
+                {{ form.username.errors }}
+              </div>
+              
+              <!-- Campo de email -->
+              <div class="mb-4">
+                <div class="form-floating">
+                  {{ form.email|add_class:"form-control rounded-3" }}
+                  <label for="{{ form.email.id_for_label }}" class="">E-mail</label>
+                </div>
+                {{ form.email.errors }}
+              </div>
+              
+              <!-- Campo de cidade -->
+              <div class="mb-4">
+                <div class="form-floating">
+                  {{ form.cidade|add_class:"form-control rounded-3" }}
+                  <label for="{{ form.cidade.id_for_label }}" class="">Cidade</label>
+                </div>
+                {{ form.cidade.errors }}
+              </div>
+              
+              <!-- Senha e Confirmação -->
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    {{ form.password|add_class:"form-control rounded-3" }}
+                    <label for="{{ form.password.id_for_label }}" class="">Senha</label>
+                  </div>
+                  {{ form.password.errors }}
+                </div>
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    {{ form.confirm_password|add_class:"form-control rounded-3" }}
+                    <label for="{{ form.confirm_password.id_for_label }}" class="">Confirmar Senha</label>
+                  </div>
+                  {{ form.confirm_password.errors }}
+                </div>
+              </div>
+              
+              <!-- Termos e Condições -->
+              <div class="form-check mb-4">
+                <input class="form-check-input border-primary" type="checkbox" id="termos" required>
+                <label class="form-check-label" for="termos">
+                  Aceito os <a href="#" class="text-primary fw-bold" data-bs-toggle="modal" data-bs-target="#termosModal">Termos de Uso</a> e 
+                  <a href="#" class="text-primary fw-bold" data-bs-toggle="modal" data-bs-target="#condicoesModal">Condições</a>
+                </label>
+              </div>
+              
+              <!-- Botão de Cadastro -->
+              <div class="d-grid mb-3">
+                <button class="btn btn-primary btn-lg rounded-3 py-3 fw-bold shadow-sm" type="submit">
+                  Cadastrar
+                </button>
+              </div>
+              
+              <div class="text-center">
+                <p class="mb-0">Já possui uma conta? <a href="{% url 'contas:login' %}" class="text-primary fw-bold">Clique aqui para entrar!</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Estilos personalizados */
+  .card {
+    border: none;
+    transition: transform 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .form-control, .form-select {
+    border: 1px solid #0d6efd;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #0d6efd;
+  }
+  
+  .form-floating>label {
+    color: #979797;
+    padding: 1rem 1.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  a {
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .bg-gradient {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+  }
+</style>
+{% endblock %}
