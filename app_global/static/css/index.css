@@ -1,3 +1,9 @@
+:root {
+  --azul-claro: #4261BA;
+  --azul-escuro: #0D0C49;
+  --cinza-claro: #D9D9D9;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,20 +30,18 @@ a {
 
 /* Quando a classe .scrolled é adicionada */
 .main-header.scrolled {
-  background-color: #fff;
+  background-color: #0D0C49;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Links e ícones ficam pretos */
-.main-header.scrolled .navbar-brand,
-.main-header.scrolled .logo-icon {
-  color: #000 !important;
-}
-
-.main-header.scrolled .nav-link{
-  color: var(--bs-nav-link-color) !important;
 }
 
 .logo-projeto {
     font-size: 1.4rem;
+}
+
+.bg-cinza {
+    background-color: var(--cinza-claro);
+}
+
+.bg-azul {
+    background-color: var(--azul-claro);
 }
