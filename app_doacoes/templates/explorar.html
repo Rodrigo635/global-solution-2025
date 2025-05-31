@@ -59,8 +59,13 @@
       {% for ong in ongs %}
       <div class="card ong-card shadow-lg">
         <div class="card-img-top position-relative">
-          <i class="fas fa-hands-helping card-icon"></i>
-          {% for categoria in ong.categorias.all %}
+          {% if ong.user.imagem %}
+          <img
+            src="{{ ong.user.imagem.url }}"
+            alt="{{ ong.user }}"
+            id="image-profile"
+          />
+          {% endif %} {% for categoria in ong.user.categorias.all %}
           <span class="badge bg-light text-dark category-badge"
             >{{ categoria.nome }}</span
           >

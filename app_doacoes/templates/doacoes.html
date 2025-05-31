@@ -1,5 +1,5 @@
 {% extends 'index2.html' %} {% block content %} {% load static %}
-<link rel="stylesheet" href="{% static 'css/doar.css' %}" />
+<link rel="stylesheet" href="{% static 'css/doacoes.css' %}" />
 
 <section class="py-5" id="doacoes">
   <div class="container my-lg-5">
@@ -41,14 +41,19 @@
         </button>
         <div
           id="carousel-urgente"
-          class="d-flex overflow-hidden gap-3 py-3 position-relative px-md-5 carousel-container"
+          class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
           {% for urgente in urgentes %}
           <div class="card ong-card shadow-lg">
             <div class="card-img-top position-relative">
-              <i class="fas fa-hands-helping card-icon"></i>
-              {% for categoria in urgente.categorias.all %}
+              {% if ong.user.imagem %}
+              <img
+                src="{{ ong.user.imagem.url }}"
+                alt="{{ ong.user }}"
+                id="image-profile"
+              />
+              {% endif %} {% for categoria in urgente.user.categorias.all %}
               <span class="badge bg-light text-dark category-badge"
                 >{{ categoria.nome }}</span
               >
@@ -56,7 +61,9 @@
             </div>
 
             <div class="card-body p-4">
-              <h5 class="card-title fw-bold text-dark mb-3">{{ urgente.user }}</h5>
+              <h5 class="card-title fw-bold text-dark mb-3">
+                {{ urgente.user }}
+              </h5>
               <p class="card-text text-muted mb-3">{{ urgente.descricao }}</p>
 
               <!-- Botões de ação -->
@@ -114,14 +121,19 @@
         </button>
         <div
           id="carousel-sugestoes"
-          class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
+          class="d-flex gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
           {% for ong in ongs %}
           <div class="card ong-card shadow-lg">
             <div class="card-img-top position-relative">
-              <i class="fas fa-hands-helping card-icon"></i>
-              {% for categoria in ong.categorias.all %}
+              {% if ong.user.imagem %}
+              <img
+                src="{{ ong.user.imagem.url }}"
+                alt="{{ ong.user }}"
+                id="image-profile"
+              />
+              {% endif %} {% for categoria in ong.user.categorias.all %}
               <span class="badge bg-light text-dark category-badge"
                 >{{ categoria.nome }}</span
               >
@@ -199,14 +211,19 @@
         </button>
         <div
           id="carousel-explorar"
-          class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
+          class="d-flex gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
           {% for ong in ongs %}
           <div class="card ong-card shadow-lg">
             <div class="card-img-top position-relative">
-              <i class="fas fa-hands-helping card-icon"></i>
-              {% for categoria in ong.categorias.all %}
+              {% if ong.user.imagem %}
+              <img
+                src="{{ ong.user.imagem.url }}"
+                alt="{{ ong.user }}"
+                id="image-profile"
+              />
+              {% endif %} {% for categoria in ong.user.categorias.all %}
               <span class="badge bg-light text-dark category-badge"
                 >{{ categoria.nome }}</span
               >
@@ -283,6 +300,6 @@
 </section>
 
 {% load static %}
-<script src="{% static 'js/doacoes.js' %}"></script>
+<script src="{% static 'js/doacao.js' %}"></script>
 
 {% endblock %}

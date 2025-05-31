@@ -7,6 +7,11 @@
   transition: all 0.3s ease;
 }
 
+#image-profile{
+  width: 100%;
+  height: 160px;
+}
+
 .ong-card:hover {
   transform: translateY(-5px);
 }
