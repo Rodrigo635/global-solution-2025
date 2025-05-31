@@ -96,6 +96,7 @@ def criar_ong():
             emergencia=True,
             data_criacao=now()
         )
+        
 
         categorias = Categoria.objects.filter(nome__in=['Educação', 'Assistência Social'])
         ong.categorias.set(categorias)

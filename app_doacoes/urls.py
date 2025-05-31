@@ -6,4 +6,5 @@ app_name = 'doacoes'
 urlpatterns = [
     path('', doacoes, name='doacoes'),
     path('explorar/', explorar, name='explorar'),
+    path('ong/<str:user>/', ong, name='ong'),
 ]

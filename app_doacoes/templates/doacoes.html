@@ -1,5 +1,6 @@
-{% extends 'index2.html' %} {% block content %}
-<link rel="stylesheet" href="../static/css/doacoes.css" />
+{% extends 'index2.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/doar.css' %}" />
+
 <section class="py-5" id="doacoes">
   <div class="container my-lg-5">
     <form
@@ -43,21 +44,51 @@
           class="d-flex overflow-hidden gap-3 py-3 position-relative px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
-          {% for i in "x"|rjust:10 %}
-          <div class="card" style="min-width: 250px">
-            <div class="card-img-top bg-danger" style="height: 140px"></div>
-            <div class="card-body">
-              <h5 class="card-title">ONG {{ forloop.counter }}</h5>
-              <p class="card-text">
-                Descrição curta da ONG com informações relevantes sobre suas
-                necessidades
-              </p>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="#" class="btn btn-primary">Ver mais</a>
-                <a href="#" class="btn btn-success" target="_blank"
-                  >Quero doar</a
+          {% for urgente in urgentes %}
+          <div class="card ong-card shadow-lg">
+            <div class="card-img-top position-relative">
+              <i class="fas fa-hands-helping card-icon"></i>
+              {% for categoria in urgente.categorias.all %}
+              <span class="badge bg-light text-dark category-badge"
+                >{{ categoria.nome }}</span
+              >
+              {% endfor %}
+            </div>
+
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold text-dark mb-3">{{ urgente.user }}</h5>
+              <p class="card-text text-muted mb-3">{{ urgente.descricao }}</p>
+
+              <!-- Botões de ação -->
+              <div class="d-flex gap-2">
+                <a
+                  href="{% url 'doacoes:ong' urgente.user.username %}"
+                  class="btn btn-outline-primary flex-fill"
                 >
+                  <i class="fas fa-info-circle me-1"></i>Ver mais
+                </a>
+                {% if urgente.site %}
+                <a
+                  href="{{ urgente.site }}"
+                  class="btn btn-success flex-fill"
+                  target="_blank"
+                >
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% else %}
+                <a href="#" class="btn btn-success flex-fill" target="_blank">
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% endif %}
               </div>
+            </div>
+
+            <!-- Rodapé do card -->
+            <div class="card-footer bg-light text-center border-0">
+              <small class="text-muted">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                {{ urgente.user.cidade }} - {{ urgente.estado }}
+              </small>
             </div>
           </div>
           {% endfor %}
@@ -86,20 +117,51 @@
           class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
-          {% for i in "x"|rjust:10 %}
-          <div class="card" style="min-width: 250px">
-            <div class="card-img-top bg-info" style="height: 140px"></div>
-            <div class="card-body">
-              <h5 class="card-title">ONG Sugerida {{ forloop.counter }}</h5>
-              <p class="card-text">
-                Esta é uma sugestão baseada no seu histórico de doações
-              </p>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="#" class="btn btn-primary">Ver mais</a>
-                <a href="#" class="btn btn-success" target="_blank"
-                  >Quero doar</a
+          {% for ong in ongs %}
+          <div class="card ong-card shadow-lg">
+            <div class="card-img-top position-relative">
+              <i class="fas fa-hands-helping card-icon"></i>
+              {% for categoria in ong.categorias.all %}
+              <span class="badge bg-light text-dark category-badge"
+                >{{ categoria.nome }}</span
+              >
+              {% endfor %}
+            </div>
+
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+              <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+
+              <!-- Botões de ação -->
+              <div class="d-flex gap-2">
+                <a
+                  href="{% url 'doacoes:ong' ong.user.username %}"
+                  class="btn btn-outline-primary flex-fill"
                 >
+                  <i class="fas fa-info-circle me-1"></i>Ver mais
+                </a>
+                {% if ong.site %}
+                <a
+                  href="{{ ong.site }}"
+                  class="btn btn-success flex-fill"
+                  target="_blank"
+                >
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% else %}
+                <a href="#" class="btn btn-success flex-fill" target="_blank">
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% endif %}
               </div>
+            </div>
+
+            <!-- Rodapé do card -->
+            <div class="card-footer bg-light text-center border-0">
+              <small class="text-muted">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                {{ ong.user.cidade }} - {{ ong.estado }}
+              </small>
             </div>
           </div>
           {% endfor %}
@@ -122,10 +184,9 @@
         >
         <select id="filtroCategoria" class="form-select w-auto d-inline-block">
           <option value="todas">Todas</option>
-          <option value="criancas">Crianças</option>
-          <option value="animais">Animais</option>
-          <option value="meio-ambiente">Meio Ambiente</option>
-          <option value="educacao">Educação</option>
+          {% for categoria in categorias %}
+          <option value="{{ categoria.nome }}">{{ categoria.nome }}</option>
+          {% endfor %}
         </select>
       </div>
 
@@ -141,22 +202,51 @@
           class="d-flex overflow-hidden gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
-          {% for i in "x"|rjust:10 %}
-          <div class="card" style="min-width: 250px">
-            <div class="card-img-top bg-success" style="height: 140px"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                ONG para Explorar {{ forloop.counter }}
-              </h5>
-              <p class="card-text">
-                Conheça novas organizações que precisam de ajuda
-              </p>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="#" class="btn btn-primary">Ver mais</a>
-                <a href="#" class="btn btn-success" target="_blank"
-                  >Quero doar</a
+          {% for ong in ongs %}
+          <div class="card ong-card shadow-lg">
+            <div class="card-img-top position-relative">
+              <i class="fas fa-hands-helping card-icon"></i>
+              {% for categoria in ong.categorias.all %}
+              <span class="badge bg-light text-dark category-badge"
+                >{{ categoria.nome }}</span
+              >
+              {% endfor %}
+            </div>
+
+            <div class="card-body p-4">
+              <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+              <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+
+              <!-- Botões de ação -->
+              <div class="d-flex gap-2">
+                <a
+                  href="{% url 'doacoes:ong' ong.user.username %}"
+                  class="btn btn-outline-primary flex-fill"
                 >
+                  <i class="fas fa-info-circle me-1"></i>Ver mais
+                </a>
+                {% if ong.site %}
+                <a
+                  href="{{ ong.site }}"
+                  class="btn btn-success flex-fill"
+                  target="_blank"
+                >
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% else %}
+                <a href="#" class="btn btn-success flex-fill" target="_blank">
+                  <i class="fas fa-heart me-1"></i>Quero doar
+                </a>
+                {% endif %}
               </div>
+            </div>
+
+            <!-- Rodapé do card -->
+            <div class="card-footer bg-light text-center border-0">
+              <small class="text-muted">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                {{ ong.user.cidade }} - {{ ong.estado }}
+              </small>
             </div>
           </div>
           {% endfor %}
@@ -192,50 +282,7 @@
   </div>
 </section>
 
-<script>
-  // Função para configurar cada carrossel
-  function setupCarousel(carouselId) {
-    const container = document.getElementById(`carousel-${carouselId}`);
-    const prevBtn = document.querySelector(
-      `.carousel-prev[data-carousel="${carouselId}"]`
-    );
-    const nextBtn = document.querySelector(
-      `.carousel-next[data-carousel="${carouselId}"]`
-    );
-
-    if (!container || !prevBtn || !nextBtn) return;
-
-    const scrollAmount = () => {
-      const card = container.querySelector(".card");
-      return card ? (card.offsetWidth + 12) * 3 : 600;
-    };
-
-    prevBtn.onclick = (e) => {
-      e.stopPropagation();
-      container.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
-    };
-
-    nextBtn.onclick = (e) => {
-      e.stopPropagation();
-      container.scrollBy({ left: scrollAmount(), behavior: "smooth" });
-    };
-  }
-
-  // Configura todos os carrosseis
-  document.addEventListener("DOMContentLoaded", () => {
-    ["urgente", "sugestoes", "explorar"].forEach(setupCarousel);
-
-    // Efeitos de hover
-    document.querySelectorAll(".card").forEach((card) => {
-      card.onmouseenter = () => {
-        card.style.transform = "scale(1.05)";
-      };
-
-      card.onmouseleave = () => {
-        card.style.transform = "scale(1)";
-      };
-    });
-  });
-</script>
+{% load static %}
+<script src="{% static 'js/doacoes.js' %}"></script>
 
 {% endblock %}
