@@ -1,15 +1,35 @@
 .ong-card {
-  max-width: 350px;
-  border: none;
-  border-radius: 15px;
-  overflow: hidden;
+  width: 350px;
+  height: 400px;
   padding: 0;
-  transition: all 0.3s ease;
 }
 
-#image-profile{
+.ong-card .card-img-top{
+  height: 40%;
+}
+
+.card-img-top img{
   width: 100%;
-  height: 160px;
+  padding: 0;
+}
+
+.ong-card > .card-body{
+  height: 50%;
+}
+
+.ong-card > .card-footer{
+  height: 10%;
+}
+
+.card-body__text{
+  height: 80%;
+}
+
+.card-body__buttons{
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ong-card:hover {
@@ -46,8 +66,21 @@
   display: inline-block;
 }
 
-@media screen and (max-width: 768px) {
-  .card {
-    width: 100% !important;
-  }
+
+#image-profile {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-img-top {
+  height: 160px;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

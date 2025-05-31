@@ -47,10 +47,10 @@
           {% for urgente in urgentes %}
           <div class="card ong-card shadow-lg">
             <div class="card-img-top position-relative">
-              {% if ong.user.imagem %}
+              {% if urgente.user.imagem %}
               <img
-                src="{{ ong.user.imagem.url }}"
-                alt="{{ ong.user }}"
+                src="{{ urgente.user.imagem.url }}"
+                alt="{{ urgente.user }}"
                 id="image-profile"
               />
               {% endif %} {% for categoria in urgente.user.categorias.all %}
@@ -60,14 +60,16 @@
               {% endfor %}
             </div>
 
-            <div class="card-body p-4">
-              <h5 class="card-title fw-bold text-dark mb-3">
-                {{ urgente.user }}
-              </h5>
-              <p class="card-text text-muted mb-3">{{ urgente.descricao }}</p>
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+              <div class="card-body__text">
+                <h5 class="card-title fw-bold text-dark mb-3">
+                  {{ urgente.user }}
+                </h5>
+                <p class="card-text text-muted mb-3">{{ urgente.descricao }}</p>
+              </div>
 
               <!-- Botões de ação -->
-              <div class="d-flex gap-2">
+              <div class="d-flex gap-2 card-body__buttons">
                 <a
                   href="{% url 'doacoes:ong' urgente.user.username %}"
                   class="btn btn-outline-primary flex-fill"
@@ -124,7 +126,7 @@
           class="d-flex gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth"
         >
-          {% for ong in ongs %}
+          {% for ong in sugestoes %}
           <div class="card ong-card shadow-lg">
             <div class="card-img-top position-relative">
               {% if ong.user.imagem %}
@@ -140,12 +142,14 @@
               {% endfor %}
             </div>
 
-            <div class="card-body p-4">
-              <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
-              <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+              <div class="card-body__text">
+                <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+                <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+              </div>
 
               <!-- Botões de ação -->
-              <div class="d-flex gap-2">
+              <div class="d-flex gap-2 card-body__buttons">
                 <a
                   href="{% url 'doacoes:ong' ong.user.username %}"
                   class="btn btn-outline-primary flex-fill"
@@ -230,12 +234,14 @@
               {% endfor %}
             </div>
 
-            <div class="card-body p-4">
-              <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
-              <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+            <div class="card-body p-4 d-flex flex-column justify-content-between">
+              <div class="card-body__text">
+                <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+                <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+              </div>
 
               <!-- Botões de ação -->
-              <div class="d-flex gap-2">
+              <div class="d-flex gap-2 card-body__buttons">
                 <a
                   href="{% url 'doacoes:ong' ong.user.username %}"
                   class="btn btn-outline-primary flex-fill"
