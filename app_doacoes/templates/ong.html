@@ -1,0 +1,136 @@
+{% extends 'index2.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/ongs.css' %}" />
+
+<section class="min-vh-100 py-4">
+  <div class="container my-lg-5">
+    <!-- Header Section -->
+    <div class="header-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 class="display-5 fw-bold mb-0 text-uppercase">
+              {{ ong.user }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container d-flex justify-content-center">
+      <div class="info-card">
+        <!-- Description Section -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <h3 class="mb-3 fw-bold">Descrição</h3>
+            <p id="description-text">{{ ong.descricao }}</p>
+            <button id="read-more" class="btn btn-primary" style="display: none;">Ver mais</button>
+          </div>
+        </div>
+
+        <!-- Photos Section -->
+        <div class="row mb-5">
+          <div class="col-12">
+            <h4 class="mb-3 fw-bold">Fotos</h4>
+            <div class="row photos-grid d-flex justify-content-center">
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <div class="photo-placeholder photo-item">
+                  <i class="fas fa-image"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="row">
+          <div class="col-12">
+            <h4 class="mb-3 fw-bold">Informações de Contato</h4>
+            <div class="contact-info">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="contact-item">
+                    <i class="fas fa-phone contact-icon me-2"></i>
+                    <strong>Telefone:</strong> {{ong.telefone}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon me-2"></i>
+                    <strong>E-mail:</strong> {{ong.user.email}}
+                  </div>
+                  {% if ong.site %}
+                  <div class="contact-item">
+                    <i class="fas fa-globe contact-icon me-2"></i>
+                    <strong>Site:</strong> {{ong.site}}
+                  </div>
+                  {% endif %}
+                  {% if ong.pix %}
+                  <div class="contact-item">
+                    <i class="fas fa-key contact-icon me-2"></i>
+                    <strong>Chave Pix:</strong> {{ong.pix}}
+                  </div>
+                  {% endif %}
+                </div>
+                <div class="col-md-6">
+                  <div class="contact-item">
+                    <i class="fas fa-map-pin contact-icon me-2"></i>
+                    <strong>CEP:</strong> {{ong.cep}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-map-marker-alt contact-icon me-2"></i>
+                    <strong>Estado:</strong> {{ong.estado}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-city contact-icon me-2"></i>
+                    <strong>Cidade:</strong> {{ong.user.cidade}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-road contact-icon me-2"></i>
+                    <strong>Bairro:</strong> {{ong.bairro}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-hashtag contact-icon me-2"></i>
+                    <strong>Número:</strong> {{ong.numero}}
+                  </div>
+                  <div class="contact-item">
+                    <i class="fas fa-info-circle contact-icon me-2"></i>
+                    <strong>Complemento:</strong> {{ong.complemento}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% load static %}
+<script src="{% static 'js/ong.js' %}"></script>
+
+{% endblock %}

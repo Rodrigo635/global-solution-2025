@@ -100,6 +100,7 @@ def criar_ong():
             emergencia=True,
             data_criacao=now()
         )
+        
 
 
         print("✅ ONG criada com categorias associadas!")
