@@ -59,27 +59,33 @@
       {% for ong in ongs %}
       <div class="card ong-card shadow-lg">
         <div class="card-img-top position-relative">
-          <i class="fas fa-hands-helping card-icon"></i>
-          {% for categoria in ong.categorias.all %}
+          {% if ong.user.imagem %}
+          <img
+            src="{{ ong.user.imagem.url }}"
+            alt="{{ ong.user }}"
+            id="image-profile"
+          />
+          {% endif %} {% for categoria in ong.user.categorias.all %}
           <span class="badge bg-light text-dark category-badge"
             >{{ categoria.nome }}</span
           >
           {% endfor %}
         </div>
 
-        <div class="card-body p-4">
-          <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
-          <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+        <div class="card-body p-4 d-flex flex-column justify-content-between">
+          <div class="card-body__text">
+            <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+            <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+          </div>
 
           <!-- Botões de ação -->
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 card-body__buttons">
             <a
               href="{% url 'doacoes:ong' ong.user.username %}"
               class="btn btn-outline-primary flex-fill"
             >
               <i class="fas fa-info-circle me-1"></i>Ver mais
             </a>
-
             {% if ong.site %}
             <a
               href="{{ ong.site }}"
@@ -108,5 +114,8 @@
     </div>
   </div>
 </section>
+
+{% load static %}
+<script src="{% static 'js/explorar.js' %}"></script>
 
 {% endblock %}

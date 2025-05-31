@@ -1,14 +1,16 @@
 {% extends 'index2.html' %} {% block content %} {% load static %}
-<link rel="stylesheet" href="{% static 'css/ongs.css' %}" />
+<link rel="stylesheet" href="{% static 'css/ong.css' %}" />
 
 <section class="min-vh-100 py-4">
   <div class="container my-lg-5">
     <!-- Header Section -->
-    <div class="header-section">
+    <div class="header-section position-relative">
+      <img src="{{ ong.user.imagem.url }}" alt="{{ ong.user }}" id="banner-profile" />
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h1 class="display-5 fw-bold mb-0 text-uppercase">
+            
+            <h1 class="display-5 fw-bold mb-0 text-uppercase position-absolute top-50 start-50  translate-middle">
               {{ ong.user }}
             </h1>
           </div>
@@ -91,7 +93,7 @@
                   {% if ong.pix %}
                   <div class="contact-item">
                     <i class="fas fa-key contact-icon me-2"></i>
-                    <strong>Chave Pix:</strong> {{ong.pix}}
+                    <strong>Chave Pix:</strong> {{ong.pixTipo}} - {{ong.pix}}
                   </div>
                   {% endif %}
                 </div>
