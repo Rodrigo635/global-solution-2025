@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.photos');
+    let maxHeight = 0;
+    items.forEach(item => {
+      const height = item.offsetHeight;
+      if (height > maxHeight) maxHeight = height;
+    });
+    items.forEach(item => item.style.height = maxHeight + 'px');
+
+
     const description = document.getElementById('description-text');
     const btnReadMore = document.getElementById('read-more');
 

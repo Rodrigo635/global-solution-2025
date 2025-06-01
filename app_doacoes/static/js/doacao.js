@@ -1,3 +1,11 @@
+function limitTextLength(){
+  const description = document.getElementsByClassName("card-text");
+  for (let i = 0; i < description.length; i++) {
+    if (description[i].innerHTML.length <= 90) continue;
+    description[i].innerHTML = description[i].innerHTML.substring(0, 90) + "..."
+  }
+}
+
 // Função para configurar cada carrossel com suporte touch
 function setupCarousel(carouselId) {
   const container = document.getElementById(`carousel-${carouselId}`);
@@ -123,9 +131,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const description = document.getElementsByClassName("card-text");
-  for (let i = 0; i < description.length; i++) {
-    if (description[i].innerHTML.length <= 95) continue;
-    description[i].innerHTML = description[i].innerHTML.substring(0, 95) + "..."
-  }
+
+  limitTextLength();
+});
+
+document.getElementById('filtroCategoria').addEventListener('change', function () {
+  const categoria = this.value;
+
+  fetch(`/doacoes?categoria=${categoria}`, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest' 
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('carousel-explorar').innerHTML = data.html;
+      limitTextLength();
+    });
 });

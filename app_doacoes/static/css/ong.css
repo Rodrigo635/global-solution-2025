@@ -8,8 +8,6 @@
 }
 
 .photo-placeholder {
-  background-color: #e9ecef;
-  border: 2px dashed #dee2e6;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -17,10 +15,6 @@
   color: #6c757d;
   font-size: 2rem;
   transition: all 0.3s ease;
-}
-
-.photo-placeholder:hover {
-  background-color: #dee2e6;
 }
 
 .info-card {

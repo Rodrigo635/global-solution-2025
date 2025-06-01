@@ -1,36 +1,19 @@
-{% extends 'index2.html' %} {% block content %} {% load static %}
+{% extends 'index.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'css/explorar.css' %}" />
 
 <section class="py-5">
   <div class="container my-lg-5">
     <h2 class="text-center my-5">Conheça novas ONGs para você ajudar!</h2>
-    <form action="" method="GET">
-      <div
-        class="d-flex align-items-center m-auto justify-content-center position-relative"
-      >
-        <input
-          type="search"
-          name="busca"
-          id="busca"
-          placeholder="Busque por ONG"
-          class="py-2 px-3 rounded-pill w-100"
-        />
-        <button
-          type="submit"
-          class="btn btn-search position-absolute end-0 me-2"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="25"
-            height="25"
-            viewBox="0 0 50 50"
-          >
+    <form action="/doacoes/explorar/" method="GET">
+      <div class="d-flex align-items-center m-auto justify-content-center position-relative">
+        <input type="search" name="busca" id="busca" placeholder="Busque por ONG"
+          class="py-2 px-3 rounded-pill w-100" />
+        <button type="submit" class="btn btn-search position-absolute end-0 me-2">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
             <path
               d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21
-                    5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"
-            ></path>
+                    5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z">
+            </path>
           </svg>
         </button>
       </div>
@@ -40,82 +23,45 @@
 
     <div class="pt-5 pb-3">
       <div class="mb-3">
-        <label for="filtroCategoria" class="form-label"
-          >Filtrar por categoria:</label
-        >
-        <select id="filtroCategoria" class="form-select w-auto d-inline-block">
-          <option value="todas">Todas</option>
-          {% for categoria in categorias %}
-          <option value="{{ categoria.nome }}">{{ categoria.nome }}</option>
-          {% endfor %}
-        </select>
+        <form method="get">
+          <label for="filtroCategoria" class="form-label">Filtrar por categoria:</label>
+          <select name="categoria" id="filtroCategoria" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
+              <option value="todas" {% if categoria_selecionada == '' or categoria_selecionada == 'todas' %}selected{% endif %}>Todas</option>
+              {% for categoria in categorias %}
+              <option value="{{ categoria.nome }}" {% if categoria_selecionada == categoria.nome %}selected{% endif %}>
+                  {{ categoria.nome }}
+              </option>
+              {% endfor %}
+          </select>
+        </form>
       </div>
     </div>
 
     <!-- cards -->
-    <div
-      class="row row-cols-1 row-cols-md-2 d-flex justify-content-center gap-2 py-3 row-cols-lg-3 g-4"
-    >
-      {% for ong in ongs %}
-      <div class="card ong-card shadow-lg">
-        <div class="card-img-top position-relative">
-          {% if ong.user.imagem %}
-          <img
-            src="{{ ong.user.imagem.url }}"
-            alt="{{ ong.user }}"
-            id="image-profile"
-          />
-          {% endif %} {% for categoria in ong.user.categorias.all %}
-          <span class="badge bg-light text-dark category-badge"
-            >{{ categoria.nome }}</span
-          >
-          {% endfor %}
-        </div>
+    <div id="ongs-container" class="row row-cols-1 row-cols-md-2 d-flex justify-content-center gap-2 py-3 row-cols-lg-3 g-4">
+      {% include 'partials/card_explorar.html' %}
+    </div>
 
-        <div class="card-body p-4 d-flex flex-column justify-content-between">
-          <div class="card-body__text">
-            <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
-            <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
-          </div>
-
-          <!-- Botões de ação -->
-          <div class="d-flex gap-2 card-body__buttons">
-            <a
-              href="{% url 'doacoes:ong' ong.user.username %}"
-              class="btn btn-outline-primary flex-fill"
-            >
-              <i class="fas fa-info-circle me-1"></i>Ver mais
-            </a>
-            {% if ong.site %}
-            <a
-              href="{{ ong.site }}"
-              class="btn btn-success flex-fill"
-              target="_blank"
-            >
-              <i class="fas fa-heart me-1"></i>Quero doar
-            </a>
-            {% else %}
-            <a href="#" class="btn btn-success flex-fill" target="_blank">
-              <i class="fas fa-heart me-1"></i>Quero doar
-            </a>
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Rodapé do card -->
-        <div class="card-footer bg-light text-center border-0">
-          <small class="text-muted">
-            <i class="fas fa-map-marker-alt me-1"></i>
-            {{ ong.user.cidade }} - {{ ong.estado }}
-          </small>
-        </div>
+    <!-- Loading indicator -->
+    <div id="loading" class="text-center py-4" style="display: none;">
+      <div class="spinner-border" role="status">
+          <span class="visually-hidden">Carregando...</span>
       </div>
-      {% endfor %}
     </div>
   </div>
 </section>
 
 {% load static %}
 <script src="{% static 'js/explorar.js' %}"></script>
+
+<script>
+  window.paginationData = {
+    hasNext: "{{ ongs.has_next|yesno:'true,false' }}",
+    currentPage: "{{ ongs.number }}"
+  };
+</script>
+
+{% load static %}
+<script src="{% static 'js/infinityScroll.js' %}"></script>
 
 {% endblock %}
