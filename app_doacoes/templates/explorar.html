@@ -39,7 +39,7 @@
 
     <!-- cards -->
     <div id="ongs-container" class="row row-cols-1 row-cols-md-2 d-flex justify-content-center gap-2 py-3 row-cols-lg-3 g-4">
-      {% include 'partials/card_explorar.html' %}
+      {% include 'partials/explorar/card.html' %}
     </div>
 
     <!-- Loading indicator -->
@@ -56,12 +56,11 @@
 
 <script>
   window.paginationData = {
-    hasNext: "{{ ongs.has_next|yesno:'true,false' }}",
-    currentPage: "{{ ongs.number }}"
+    hasNext: {{ ongs.has_next|yesno:'true,false' }},
+    currentPage: {{ ongs.number }}
   };
 </script>
 
-{% load static %}
 <script src="{% static 'js/infinityScroll.js' %}"></script>
 
 {% endblock %}
