@@ -1,16 +1,21 @@
-{% extends 'index2.html' %} {% block content %} {% load static %}
+{% extends 'index.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'css/ong.css' %}" />
 
 <section class="min-vh-100 py-4">
   <div class="container my-lg-5">
     <!-- Header Section -->
     <div class="header-section position-relative">
-      <img src="{{ ong.user.imagem.url }}" alt="{{ ong.user }}" id="banner-profile" />
+      <img
+        src="{{ ong.user.imagem.url }}"
+        alt="{{ ong.user }}"
+        id="banner-profile"
+      />
       <div class="container">
         <div class="row">
           <div class="col-12">
-            
-            <h1 class="display-5 fw-bold mb-0 text-uppercase position-absolute top-50 start-50  translate-middle">
+            <h1
+              class="display-5 fw-bold mb-0 text-uppercase position-absolute top-50 start-50 translate-middle"
+            >
               {{ ong.user }}
             </h1>
           </div>
@@ -26,7 +31,13 @@
           <div class="col-12">
             <h3 class="mb-3 fw-bold">Descrição</h3>
             <p id="description-text">{{ ong.descricao }}</p>
-            <button id="read-more" class="btn btn-primary" style="display: none;">Ver mais</button>
+            <button
+              id="read-more"
+              class="btn btn-primary"
+              style="display: none"
+            >
+              Ver mais
+            </button>
           </div>
         </div>
 
@@ -35,36 +46,15 @@
           <div class="col-12">
             <h4 class="mb-3 fw-bold">Fotos</h4>
             <div class="row photos-grid d-flex justify-content-center">
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
-              <div class="col-6 col-md-3 mb-3">
-                <div class="photo-placeholder photo-item">
-                  <i class="fas fa-image"></i>
-                </div>
-              </div>
+              {% if fotos %}
+                {% for foto in fotos %}
+                  <div class="col-6 col-md-3 mb-3">
+                    <div class="photo-placeholder photo-item">
+                      <img src="{{ foto.image.url }}" alt="{{ ong.user }}" class="img-fluid w-100 photos" />
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>
@@ -89,8 +79,7 @@
                     <i class="fas fa-globe contact-icon me-2"></i>
                     <strong>Site:</strong> {{ong.site}}
                   </div>
-                  {% endif %}
-                  {% if ong.pix %}
+                  {% endif %} {% if ong.pix %}
                   <div class="contact-item">
                     <i class="fas fa-key contact-icon me-2"></i>
                     <strong>Chave Pix:</strong> {{ong.pixTipo}} - {{ong.pix}}

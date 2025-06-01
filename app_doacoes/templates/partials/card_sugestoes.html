@@ -1,0 +1,42 @@
+{% for ong in sugestoes %}
+<div class="card ong-card shadow-lg">
+    <div class="card-img-top position-relative">
+    {% if ong.user.imagem %}
+    <img src="{{ ong.user.imagem.url }}" alt="{{ ong.user }}" id="image-profile" />
+    {% endif %} {% for categoria in ong.user.categorias.all %}
+    <span class="badge bg-light text-dark category-badge">{{ categoria.nome }}</span>
+    {% endfor %}
+    </div>
+
+    <div class="card-body p-4 d-flex flex-column justify-content-between">
+    <div class="card-body__text">
+        <h5 class="card-title fw-bold text-dark mb-3">{{ ong.user }}</h5>
+        <p class="card-text text-muted mb-3">{{ ong.descricao }}</p>
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="d-flex gap-2 card-body__buttons">
+        <a href="{% url 'doacoes:ong' ong.user.username %}" class="btn btn-outline-primary flex-fill">
+        <i class="fas fa-info-circle me-1"></i>Ver mais
+        </a>
+        {% if ong.site %}
+        <a href="{{ ong.site }}" class="btn btn-success flex-fill" target="_blank">
+        <i class="fas fa-heart me-1"></i>Quero doar
+        </a>
+        {% else %}
+        <a href="#" class="btn btn-success flex-fill" target="_blank">
+        <i class="fas fa-heart me-1"></i>Quero doar
+        </a>
+        {% endif %}
+    </div>
+    </div>
+
+    <!-- Rodapé do card -->
+    <div class="card-footer bg-light text-center border-0">
+    <small class="text-muted">
+        <i class="fas fa-map-marker-alt me-1"></i>
+        {{ ong.user.cidade }} - {{ ong.estado }}
+    </small>
+    </div>
+</div>
+{% endfor %}
