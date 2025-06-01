@@ -25,7 +25,9 @@
         </button>
         <div id="carousel-urgente" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
           style="scroll-behavior: smooth">
-          {% include 'partials/card_urgente.html' %}
+          {% for ong in urgentes %}
+            {% include 'partials/doacoes/card.html' %}
+          {% endfor %}
         </div>
         <button
           class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"
@@ -46,7 +48,9 @@
         </button>
         <div id="carousel-sugestoes" class="d-flex gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth">
-          {% include 'partials/card_sugestoes.html' %}
+          {% for ong in sugestoes %}
+            {% include 'partials/doacoes/card.html' %}
+          {% endfor %}
         </div>
         <button
           class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"
@@ -81,7 +85,9 @@
         </button>
         <div id="carousel-explorar" class="d-flex gap-3 py-3 px-md-5 carousel-container"
           style="scroll-behavior: smooth">
-           {% include 'partials/card_explorar.html' %}
+            {% for ong in ongs %}
+              {% include 'partials/doacoes/card.html' %}
+            {% endfor %}
         </div>
         <button
           class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high"

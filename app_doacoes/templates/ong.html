@@ -5,11 +5,18 @@
   <div class="container my-lg-5">
     <!-- Header Section -->
     <div class="header-section position-relative">
+      {% if ong.user.imagem %}
       <img
         src="{{ ong.user.imagem.url }}"
         alt="{{ ong.user }}"
         id="banner-profile"
       />
+      {% else %}
+      <div id="banner-profile"> 
+
+      </div>
+      {% endif %}
+
       <div class="container">
         <div class="row">
           <div class="col-12">
@@ -25,7 +32,7 @@
 
     <!-- Main Content -->
     <div class="container d-flex justify-content-center">
-      <div class="info-card">
+      <div class="info-card w-100">
         <!-- Description Section -->
         <div class="row mb-5">
           <div class="col-12">
@@ -44,9 +51,10 @@
         <!-- Photos Section -->
         <div class="row mb-5">
           <div class="col-12">
-            <h4 class="mb-3 fw-bold">Fotos</h4>
+            
             <div class="row photos-grid d-flex justify-content-center">
               {% if fotos %}
+                <h4 class="mb-3 fw-bold">Fotos</h4>
                 {% for foto in fotos %}
                   <div class="col-6 col-md-3 mb-3">
                     <div class="photo-placeholder photo-item">

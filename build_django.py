@@ -59,54 +59,118 @@ def criar_categorias():
 def criar_ong():
     from django.contrib.auth import get_user_model
     from app_contas.models import OngProfile, Categoria
-    from django.core.files.uploadedfile import SimpleUploadedFile
     from django.utils.timezone import now
     User = get_user_model()
 
-    username = 'ong_esperanca'
-    email = 'contato@ongesperanca.org'
-    password = 'senha123'
+    dados_ongs = [
+        {
+            'username': 'ong_esperanca',
+            'email': 'contato@ongesperanca.org',
+            'categorias': ['Educação', 'Assistência Social'],
+            'cidade': 'São Paulo',
+            'descricao': 'Atua com foco em educação e assistência social.',
+        },
+        {
+            'username': 'ong_saudavel',
+            'email': 'contato@ongsaudavel.org',
+            'categorias': ['Saúde', 'Nutrição'],
+            'cidade': 'Campinas',
+            'descricao': 'Promove saúde e boa alimentação para comunidades.',
+        },
+        {
+            'username': 'ong_verde_vida',
+            'email': 'contato@ongverdevida.org',
+            'categorias': ['Meio Ambiente'],
+            'cidade': 'Curitiba',
+            'descricao': 'Trabalha na preservação ambiental e reflorestamento.',
+        },
+        {
+            'username': 'ong_amor_animal',
+            'email': 'contato@ongamoranimal.org',
+            'categorias': ['Animais'],
+            'cidade': 'Belo Horizonte',
+            'descricao': 'Resgata e cuida de animais abandonados.',
+        },
+        {
+            'username': 'ong_sonho_vivo',
+            'email': 'contato@ongsonhovivo.org',
+            'categorias': ['Cultura', 'Educação'],
+            'cidade': 'Salvador',
+            'descricao': 'Desenvolve projetos culturais e educacionais.',
+        },
+        {
+            'username': 'ong_maos_dadas',
+            'email': 'contato@ongmaosdadas.org',
+            'categorias': ['Assistência Social'],
+            'cidade': 'Fortaleza',
+            'descricao': 'Apoia famílias em situação de vulnerabilidade.',
+        },
+        {
+            'username': 'ong_paz_ativa',
+            'email': 'contato@ongpazativa.org',
+            'categorias': ['Direitos Humanos'],
+            'cidade': 'Porto Alegre',
+            'descricao': 'Defende direitos e promove a cidadania.',
+        },
+        {
+            'username': 'ong_futuro_digital',
+            'email': 'contato@ongfuturodigital.org',
+            'categorias': ['Tecnologia', 'Educação'],
+            'cidade': 'Recife',
+            'descricao': 'Ensina programação e inclusão digital.',
+        },
+        {
+            'username': 'ong_crianca_feliz',
+            'email': 'contato@ongcriancafeliz.org',
+            'categorias': ['Infância', 'Educação'],
+            'cidade': 'Manaus',
+            'descricao': 'Cuida de crianças em situação de risco.',
+        },
+        {
+            'username': 'ong_vida_marinha',
+            'email': 'contato@ongvidamarinha.org',
+            'categorias': ['Meio Ambiente', 'Animais'],
+            'cidade': 'Florianópolis',
+            'descricao': 'Protege a vida marinha e costeira.',
+        },
+    ]
 
-    if not User.objects.filter(username=username).exists():
-        print(f"\n✨ Criando usuário para ONG '{username}'...")
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            cidade='São Paulo',
-            tipo='ong',
+    for dados in dados_ongs:
+        if not User.objects.filter(username=dados['username']).exists():
+            print(f"\n✨ Criando usuário para ONG '{dados['username']}'...")
+            user = User.objects.create_user(
+                username=dados['username'],
+                email=dados['email'],
+                password='senha123',
+                cidade=dados['cidade'],
+                tipo='ong',
             )
-        
-        categorias = Categoria.objects.filter(nome__in=['Educação', 'Assistência Social'])
-        user.categorias.set(categorias)  # Para ManyToMany direto no User
 
-        print("✅ Usuário criado com sucesso!")
+            categorias = Categoria.objects.filter(nome__in=dados['categorias'])
+            user.categorias.set(categorias)
 
-        # Criação do perfil OngProfile
-        ong = OngProfile.objects.create(
-            user=user,
-            cnpj='12.345.678/0001-99',
-            descricao='A ONG Esperança atua com foco em educação e assistência social.',
-            telefone='(11) 91234-5678',
-            endereco='Rua das Flores',
-            estado='SP',
-            cep='12345678',
-            bairro='Jardim das Esperanças',
-            numero='123',
-            complemento='Sala 5',
-            pix='pix.pix@pix.pix',
-            pixTipo='Email',
-            site='https://www.ongesperanca.org',
-            emergencia=True,
-            data_criacao=now()
-        )
-        
+            OngProfile.objects.create(
+                user=user,
+                cnpj='12.345.678/0001-99',
+                descricao=dados['descricao'],
+                telefone='(11) 91234-5678',
+                endereco='Rua das Flores',
+                estado='SP',
+                cep='12345678',
+                bairro='Centro',
+                numero='123',
+                complemento='',
+                pix='pix@ong.org',
+                pixTipo='Email',
+                site=f'https://www.{dados["username"]}.org',
+                emergencia=False,
+                data_criacao=now()
+            )
 
+            print(f"✅ ONG '{dados['username']}' criada com sucesso!")
+        else:
+            print(f"\n⚠️ Usuário '{dados['username']}' já existe. Ignorando criação.")
 
-        print("✅ ONG criada com categorias associadas!")
-
-    else:
-        print(f"\n⚠️ Usuário '{username}' já existe. Ignorando criação.")
 
 
 

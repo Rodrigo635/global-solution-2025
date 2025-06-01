@@ -70,11 +70,11 @@ def explorar(request):
 
     # Paginação
     page_number = request.GET.get('page', 1)
-    paginator = Paginator(ongs, 1)
+    paginator = Paginator(ongs, 3)
     page_obj = paginator.get_page(page_number)
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        html = render_to_string('partials/card_explorar.html', {'ongs': page_obj}, request=request)
+        html = render_to_string('partials/explorar/card.html', {'ongs': page_obj}, request=request)
         return JsonResponse({'html': html, 'has_next': page_obj.has_next()})
 
     categorias = Categoria.objects.all()
