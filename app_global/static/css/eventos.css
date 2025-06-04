@@ -49,19 +49,13 @@
   color: #495057;
 }
 
-.botao-ajuda {
-  background-color: #dc3545;
-  color: white;
-  font-weight: 600;
+.btn-redondo {
   border-radius: 20px;
-  padding: 0.5rem 1rem;
+  font-weight: 600;
   text-transform: uppercase;
-  border: none;
-  transition: background-color 0.3s;
-}
-
-.botao-ajuda:hover {
-  background-color: #bb2d3b;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  z-index: 5 !important;
 }
 
 .carousel-container {

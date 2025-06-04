@@ -6,349 +6,376 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <section class="hero py-5 d-flex align-items-center">
-    <div class="container my-5 py-5">
-        <div class="row d-flex align-items-center justify-content-between">
-            <div class="col-lg-6">
-                <h3 class="text-white fw-semibold">Fique por dentro</h3>
-                <h1 class="text-white display-5 fw-semibold mt-2 mb-3">Informações em tempo real sobre eventos
-                    climáticos e desastres ambientais</h1>
-                <h4 class="mb-4 fw-normal text-white">Receba alertas, veja rotas de evacuação e doe para ajudar pessoas
-                    afetadas por desastres.</h4>
-                <a href="#" id="btn-hero" class="btn btn-primary btn-estilizado btn-lg">Sobre esse projeto</a>
-            </div>
-            <div class="col-lg-6 text-center d-none d-lg-block">
-                <img src="{% static 'imgs/planeta.png' %}" class="img-fluid" alt="planeta">
-            </div>
-        </div>
+  <div class="container my-5 py-5">
+    <div class="row d-flex align-items-center justify-content-between">
+      <div class="col-lg-6">
+        <h3 class="text-white fw-semibold">Fique por dentro</h3>
+        <h1 class="text-white display-5 fw-semibold mt-2 mb-3">Informações em tempo real sobre eventos
+          climáticos e desastres ambientais</h1>
+        <h4 class="mb-4 fw-normal text-white">Receba alertas, veja rotas de evacuação e doe para ajudar pessoas
+          afetadas por desastres.</h4>
+        <a href="#" id="btn-hero" class="btn btn-primary btn-estilizado btn-lg">Sobre esse projeto</a>
+      </div>
+      <div class="col-lg-6 text-center d-none d-lg-block">
+        <img src="{% static 'imgs/planeta.png' %}" class="img-fluid" alt="planeta">
+      </div>
     </div>
+  </div>
 </section>
 
 <section class="container my-5" id="alertas">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2 class="my-title">Alertas</h2>
-        <div class="d-flex align-items-center">
-            <a href="#" class="me-3">Ver todos</a>
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownFiltros"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Filtros
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownFiltros">
-                    <li><a class="dropdown-item" href="#">Mais recentes</a></li>
-                    <li><a class="dropdown-item" href="#">Urgentes</a></li>
-                    <li><a class="dropdown-item" href="#">Mais antigos</a></li>
-                </ul>
-            </div>
-        </div>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="my-title">Alertas</h2>
+    <div class="d-flex align-items-center">
+      <a href="{% url 'eventos' %}" class="btn btn-outline-secondary">Ver todos</a>
     </div>
-  
-    <div class="pt-0 pb-3">
-        <div class="position-relative">
-            <button
-                class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
-                data-carousel="alertas">
-                &#10094;
-            </button>
-            <div id="carousel-alertas" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
-                style="scroll-behavior: smooth">
-                {% for alerta in alertas %}
-                <div class="card evento-card">
-                    <div class="img-card">
-                        {% if alerta.imagem %}
-                        <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
-                        {% else %}
-                        <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card"
-                            alt="{{ alerta.nome }}">
-                        {% endif %}
-                    </div>
+  </div>
+
+  <div class="pt-0 pb-3">
+    <div class="position-relative">
+      <button
+        class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
+        data-carousel="alertas">
+        &#10094;
+      </button>
+      <div id="carousel-alertas" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
+        style="scroll-behavior: smooth">
+        {% for alerta in alertas %}
+        <div class="card evento-card">
+          <div class="img-card">
+            {% if alerta.imagem %}
+            <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+            {% else %}
+            <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+            {% endif %}
+          </div>
 
 
-                    <div class="card-body p-4 d-flex flex-column justify-content-between">
-                        <div class="card-body__text">
-                            <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
-                            <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
-                            <p class="card-text text-muted mb-3">Data de início: {{ alerta.data_inicio }}</p>
-                            {% if alerta.data_fim %}
-                            <p class="card-text text-muted mb-3">Data de fim: {{ alerta.data_fim }}</p>
-                            {% endif %}
-                        </div>
-
-                        <!-- Botões de ação -->
-                        <div class="d-flex gap-2 card-body__buttons">
-                            <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
-                                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
-                                <i class="fas fa-info-circle me-1"></i>Ver mais
-                            </a>
-
-                            {% if alerta.doar %}
-                            <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
-                                <i class="fas fa-heart me-1"></i>Quero ajudar
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                {% endfor %}
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            <div class="card-body__text">
+              <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
+              <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
+              <p class="card-text text-muted mb-3">Data de início: {{ alerta.data_inicio }}</p>
+              {% if alerta.data_fim %}
+              <p class="card-text text-muted mb-3">Data de fim: {{ alerta.data_fim }}</p>
+              {% endif %}
             </div>
-            <button
-                class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
-                data-carousel="alertas">
-                &#10095;
-            </button>
+
+            <!-- Botões de ação -->
+            <div class="d-flex gap-2 card-body__buttons">
+              <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
+                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
+                <i class="fas fa-info-circle me-1"></i>Ver mais
+              </a>
+
+              {% if alerta.doar %}
+              <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
+                <i class="fas fa-heart me-1"></i>Quero ajudar
+              </a>
+              {% endif %}
+            </div>
+          </div>
         </div>
+
+        {% endfor %}
+      </div>
+      <button
+        class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
+        data-carousel="alertas">
+        &#10095;
+      </button>
     </div>
+  </div>
 </section>
 
 <section class="container my-5 pb-4" id="agora">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2 class="my-title">Ocorridos</h2>
-        <div class="d-flex align-items-center">
-            <a href="#" class="me-3">Ver todos</a>
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownFiltros2"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Filtros
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownFiltros">
-                    <li><a class="dropdown-item" href="#">Mais recentes</a></li>
-                    <li><a class="dropdown-item" href="#">Urgentes</a></li>
-                    <li><a class="dropdown-item" href="#">Mais antigos</a></li>
-                </ul>
-            </div>
-        </div>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="my-title">Ocorridos</h2>
+    <div class="d-flex align-items-center">
+      <a href="{% url 'eventos' %}" class="btn btn-outline-secondary">Ver todos</a>
     </div>
-    <div class="pt-0 pb-3">
-        <div class="position-relative">
-            <button
-                class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
-                data-carousel="ocorridos">
-                &#10094;
-            </button>
-            <div id="carousel-ocorridos" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
-                style="scroll-behavior: smooth">
-                {% for alerta in ocorridos %}
-                <div class="card evento-card">
-                    <div class="img-card">
-                        {% if alerta.imagem %}
-                        <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
-                        {% else %}
-                        <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card"
-                            alt="{{ alerta.nome }}">
-                        {% endif %}
-                    </div>
+  </div>
+  <div class="pt-0 pb-3">
+    <div class="position-relative">
+      <button
+        class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
+        data-carousel="ocorridos">
+        &#10094;
+      </button>
+      <div id="carousel-ocorridos" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
+        style="scroll-behavior: smooth">
+        {% for alerta in ocorridos %}
+        <div class="card evento-card">
+          <div class="img-card">
+            {% if alerta.imagem %}
+            <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+            {% else %}
+            <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+            {% endif %}
+          </div>
 
 
-                    <div class="card-body p-4 d-flex flex-column justify-content-between">
-                        <div class="card-body__text">
-                            <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
-                            <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
-                            <p class="card-text text-muted mb-1">De {{ alerta.data_inicio }}</p>
-                            {% if alerta.data_fim %}
-                            <p class="card-text text-muted mb-3">até {{ alerta.data_fim }}</p>
-                            {% endif %}
-                        </div>
-
-                        <!-- Botões de ação -->
-                        <div class="d-flex gap-2 card-body__buttons">
-                            <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
-                                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
-                                <i class="fas fa-info-circle me-1"></i>Ver mais
-                            </a>
-                            {% if alerta.doar %}
-                            <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
-                                <i class="fas fa-heart me-1"></i>Quero ajudar
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                {% endfor %}
+          <div class="card-body p-4 d-flex flex-column justify-content-between">
+            <div class="card-body__text">
+              <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
+              <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
+              <p class="card-text text-muted mb-1">De {{ alerta.data_inicio }}</p>
+              {% if alerta.data_fim %}
+              <p class="card-text text-muted mb-3">até {{ alerta.data_fim }}</p>
+              {% endif %}
             </div>
-            <button
-                class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
-                data-carousel="ocorridos">
-                &#10095;
-            </button>
+
+            <!-- Botões de ação -->
+            <div class="d-flex gap-2 card-body__buttons">
+              <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
+                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
+                <i class="fas fa-info-circle me-1"></i>Ver mais
+              </a>
+              {% if alerta.doar %}
+              <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
+                <i class="fas fa-heart me-1"></i>Quero ajudar
+              </a>
+              {% endif %}
+            </div>
+          </div>
         </div>
+
+        {% endfor %}
+      </div>
+      <button
+        class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
+        data-carousel="ocorridos">
+        &#10095;
+      </button>
     </div>
+  </div>
 </section>
 
 <section class="py-5 bg-cinza">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <img src="{% static 'imgs/img-evento-climatico-desenho.jpg' %}" class="img-fluid rounded-3" alt="...">
-            </div>
-            <div class="col-12 col-lg-6">
-                <h2>Por que Monitorar Eventos Climáticos?</h2>
-                <h5 class="fw-normal">
-                    As mudanças climáticas intensificaram enchentes, tempestades e secas.
-                    Acompanhar alertas oficiais ajuda você a:
-                    <ul>
-                        <li>Proteger sua família e sua casa</li>
-                        <li>Planejar rotas seguras em situações de risco</li>
-                        <li>Entender sinais de emergência antes que seja tarde</li>
-                    </ul>
-                    Aqui, centralizamos avisos de órgãos competentes, dicas de segurança e caminhos para
-                    atuação comunitária em momentos críticos.
-                </h5>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <img src="{% static 'imgs/img-evento-climatico-desenho.jpg' %}" class="img-fluid rounded-3" alt="...">
+      </div>
+      <div class="col-12 col-lg-6">
+        <h2>Por que Monitorar Eventos Climáticos?</h2>
+        <h5 class="fw-normal">
+          As mudanças climáticas intensificaram enchentes, tempestades e secas.
+          Acompanhar alertas oficiais ajuda você a:
+          <ul>
+            <li>Proteger sua família e sua casa</li>
+            <li>Planejar rotas seguras em situações de risco</li>
+            <li>Entender sinais de emergência antes que seja tarde</li>
+          </ul>
+          Aqui, centralizamos avisos de órgãos competentes, dicas de segurança e caminhos para
+          atuação comunitária em momentos críticos.
+        </h5>
+      </div>
     </div>
+  </div>
 </section>
 
 <section class="py-5 bg-azul">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-6">
-                <h2 class="text-white">Ajude através de doações</h2>
-                <h5 class="text-white fw-normal">
-                    Desastres naturais atingem famílias e comunidades. Sua contribuição pode:
-                    <ul>
-                        <li>Fornecer alimentação e abrigo a vítimas</li>
-                        <li>Arrecadar materiais de primeiros socorros</li>
-                        <li>Financiar reconstrução de áreas afetadas</li>
-                    </ul>
-                    Navegue pelas instituições parceiras e faça sua doação com segurança.
-                    Cada gesto muda uma vida.
-                </h5>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <h2 class="text-white">Ajude através de doações</h2>
+        <h5 class="text-white fw-normal">
+          Desastres naturais atingem famílias e comunidades. Sua contribuição pode:
+          <ul>
+            <li>Fornecer alimentação e abrigo a vítimas</li>
+            <li>Arrecadar materiais de primeiros socorros</li>
+            <li>Financiar reconstrução de áreas afetadas</li>
+          </ul>
+          Navegue pelas instituições parceiras e faça sua doação com segurança.
+          Cada gesto muda uma vida.
+        </h5>
 
-            </div>
-            <div class="col">
-                <img src="{% static 'imgs/img-evento-climatico-desenho.jpg' %}" class="img-fluid rounded-3" alt="...">
-            </div>
-        </div>
+      </div>
+      <div class="col">
+        <img src="{% static 'imgs/img-evento-climatico-desenho.jpg' %}" class="img-fluid rounded-3" alt="...">
+      </div>
     </div>
+  </div>
 </section>
 
 <section class="container mt-5" id="equipe">
-    <h3 class="my-title text-center">Nosso Time</h3>
-    <h2 class="text-center my-title mb-4">Equipe de Desenvolvimento</h2>
+  <h3 class="my-title text-center">Nosso Time</h3>
+  <h2 class="text-center my-title mb-4">Equipe de Desenvolvimento</h2>
 
-    <div class="row d-flex align-items-center justify-content-center">
-        <div class="col-6 col-md-4 col-lg my-2">
-            <div class="card text-center">
-                <img src="../static/imgs/gabriel2.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h4 class="my-title my-3">Gabriel</h4>
-                    <p class="card-text mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, nisi
-                        voluptatem? Odio explicabo facere ducimus.</p>
-                    <div class="mt-5">
-                        <a href=""><i class="fa-brands fa-linkedin icon-social mx-2"></i></a>
-                        <a href=""><i class="fa-brands fa-github icon-social mx-2"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram icon-social mx-2"></i> </a>
-                    </div>
+  <div id="carouselCards" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <div class="carousel-item active">
+        <div class="d-flex w-100">
+          <div class="carousel-card">
+            <div class="card">
+              <div class="card-img-container">
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Rodrigo">
+              </div>
+              <div class="card-body">
+                <h4>Rodrigo</h4>
+                <p>Engenheiro DevOps responsável por infraestrutura escalável e pipelines de CI/CD. Garante alta
+                  disponibilidade e desempenho dos sistemas.</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-github"></i></a>
+                  <a href="#"><i class="fab fa-stack-overflow"></i></a>
                 </div>
+              </div>
             </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg my-2">
-            <div class="card text-center">
-                <img src="../static/imgs/miguel.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h4 class="my-title my-3">Miguel</h4>
-                    <p class="card-text">Sou estudante de Sistemas de Informação, apaixonado por tecnologia, programação e sempre buscando aprender mais para crescer profissionalmente.</p>
-
-                    <div class="mt-5">
-                        <a href="https://chatgpt.com/" target="_blank"><i
-                                class="fa-solid fa-globe icon-social mx-2"></i></a>
-                    </div>
+          </div>
+          <div class="carousel-card">
+            <div class="card">
+              <div class="card-img-container">
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Rodrigo">
+              </div>
+              <div class="card-body">
+                <h4>Rodrigo</h4>
+                <p>Engenheiro DevOps responsável por infraestrutura escalável e pipelines de CI/CD. Garante alta
+                  disponibilidade e desempenho dos sistemas.</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-github"></i></a>
+                  <a href="#"><i class="fab fa-stack-overflow"></i></a>
                 </div>
+              </div>
             </div>
-        </div>
-
-        <div class="col-6 col-md-4 col-lg my-2">
-            <div class="card text-center">
-                <img src="../static/imgs/luis.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h4 class="my-title my-3">Luis</h4>
-                    <p class="card-text mb-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi
-                        voluptas, quaerat obcaecati expedita dolores?</p>
-                    <div class="mt-5">
-                        <a href="https://chat.deepseek.com/" target="_blank"><i
-                                class="fa-solid fa-globe icon-social mx-2"></i></a>
-
-                    </div>
+          </div>
+          <div class="carousel-card">
+            <div class="card">
+              <div class="card-img-container">
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Rodrigo">
+              </div>
+              <div class="card-body">
+                <h4>Rodrigo</h4>
+                <p>Engenheiro DevOps responsável por infraestrutura escalável e pipelines de CI/CD. Garante alta
+                  disponibilidade e desempenho dos sistemas.</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-github"></i></a>
+                  <a href="#"><i class="fab fa-stack-overflow"></i></a>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="col-6 col-md-4 col-lg my-2">
-            <div class="card text-center">
-                <img src="../static/imgs/michel.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h4 class="my-title my-3">Michel</h4>
-                    <p class="card-text mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit eum
-                        accusantium non inventore saepe molestias.</p>
-                    <div class="mt-5">
-                        <a href="https://github.com/" target="_blank"><i
-                                class="fa-solid fa-globe icon-social mx-2"></i></a>
-                    </div>
+      <div class="carousel-item">
+        <div class="d-flex w-100">
+          <div class="carousel-card">
+            <div class="card">
+              <div class="card">
+                <div class="card-img-container">
+                  <img
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                    alt="Rodrigo">
                 </div>
+                <div class="card-body">
+                  <h4>Rodrigo</h4>
+                  <p>Engenheiro DevOps responsável por infraestrutura escalável e pipelines de CI/CD. Garante alta
+                    disponibilidade e desempenho dos sistemas.</p>
+                  <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
+          <div class="carousel-card">
+            <div class="card">
+              <div class="card-img-container">
+                <img
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Rodrigo">
+              </div>
+              <div class="card-body">
+                <h4>Rodrigo</h4>
+                <p>Engenheiro DevOps responsável por infraestrutura escalável e pipelines de CI/CD. Garante alta
+                  disponibilidade e desempenho dos sistemas.</p>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-github"></i></a>
+                  <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div class="col-6 col-md-4 col-lg my-2">
-            <div class="card text-center">
-                <img src="../static/imgs/rodrigo.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h4 class="my-title my-3">Rodrigo</h4>
-                    <p class="card-text mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid ullam
-                        molestias deserunt pariatur earum nisi.</p>
-                    <div class="mt-5">
-                        <a href="https://github.com/" target="_blank"><i
-                                class="fa-solid fa-globe icon-social mx-2"></i></a>
-                    </div>
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+
+    <button 
+      class="equipe-btn btn btn-primary position-absolute top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo" 
+      type="button" 
+      data-bs-target="#carouselCards" 
+      data-bs-slide="prev">
+       &#10094;
+    </button>
+    <button 
+    class="equipe-btn btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo" 
+    type="button" 
+    data-bs-target="#carouselCards" 
+    data-bs-slide="next">
+         &#10095;
+    </button>
+  </div>
+
+  </div>
 </section>
 
+
 <section class="container-fluid bg-blue-2 my-5" id="contato">
-    <div class="container py-5">
-        <h3 class="my-title text-center">Precisa de ajuda?</h3>
-        <h2 class="text-center my-title mb-4">Entre contato com a gente</h2>
-        <div class="row mt-5 justify-content-center">
-            <div class="col-lg-8">
-                <form action="">
-                    <div class="row text-start">
-                        <div class="col-12 col-lg-6 my-3">
-                            <label for="nome" class="form-label">Seu nome</label>
-                            <input type="text" class="form-control" id="nome" placeholder="Seu nome">
-                        </div>
-
-                        <div class="col-lg-6 my-2">
-                            <label for="email" class="form-label">Seu email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Seu nome">
-                        </div>
-
-                        <div class="col-lg-6 my-2">
-                            <label for="fone" class="form-label">Seu Telefone</label>
-                            <input type="tel" class="form-control" id="fone" placeholder="(xx) 9999-9999">
-                        </div>
-
-                        <div class="col-lg-6 my-2">
-                            <label for="mensagem" class="form-label">Assunto</label>
-                            <input type="text" class="form-control" id="mensagem" placeholder="Assunto">
-                        </div>
-
-                        <div class="col-lg-12 my-2">
-                            <label for="nome" class="form-label">Mensagem</label>
-                            <textarea name="mensagem" id="mensagemm" placeholder="Sua mensagem"
-                                class="form-control"></textarea>
-                        </div>
-
-                        <div class="col-lg-12 my-2 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary btn-estilizado">Enviar mensagem</button>
-                        </div>
-                    </div>
-                </form>
+  <div class="container py-5">
+    <h3 class="my-title text-center">Precisa de ajuda?</h3>
+    <h2 class="text-center my-title mb-4">Entre contato com a gente</h2>
+    <div class="row mt-5 justify-content-center">
+      <div class="col-lg-8">
+        <form action="">
+          <div class="row text-start">
+            <div class="col-12 col-lg-6 my-2">
+              <label for="nome" class="form-label">Seu nome</label>
+              <input type="text" class="form-control" id="nome" placeholder="Seu nome">
             </div>
-        </div>
+
+            <div class="col-lg-6 my-2">
+              <label for="email" class="form-label">Seu email</label>
+              <input type="email" class="form-control" id="email" placeholder="Seu nome">
+            </div>
+
+            <div class="col-lg-6 my-2">
+              <label for="fone" class="form-label">Seu Telefone</label>
+              <input type="tel" class="form-control" id="fone" placeholder="(xx) 9999-9999">
+            </div>
+
+            <div class="col-lg-6 my-2">
+              <label for="mensagem" class="form-label">Assunto</label>
+              <input type="text" class="form-control" id="mensagem" placeholder="Assunto">
+            </div>
+
+            <div class="col-lg-12 my-2">
+              <label for="nome" class="form-label">Mensagem</label>
+              <textarea name="mensagem" id="mensagemm" placeholder="Sua mensagem" class="form-control"></textarea>
+            </div>
+
+            <div class="col-lg-12 my-2 d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary btn-estilizado">Enviar mensagem</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </section>
 
 <script src="{% static 'js/home.js' %}"></script>
