@@ -1,0 +1,111 @@
+:root {
+  --azul: #0d6efd;
+}
+
+.evento-card {
+  overflow: hidden;
+  min-height: 350px;
+}
+
+.img-card {
+  width: 100%;
+  padding: 15px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.imagem-card {
+  width: auto;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+.header-evento {
+  background-color: #ccc;
+  color: white;
+}
+
+#banner-evento {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-evento-detalhes {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: -2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.texto-descricao {
+  line-height: 1.7;
+  color: #495057;
+}
+
+.botao-ajuda {
+  background-color: #dc3545;
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.botao-ajuda:hover {
+  background-color: #bb2d3b;
+}
+
+.carousel-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE e Edge */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .carousel-prev,
+  .carousel-next {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
+  #carousel-urgente,
+  #carousel-sugestoes,
+  #carousel-explorar {
+    overflow: auto !important;
+  }
+
+  .card {
+    transition: none !important;
+  }
+  .card:hover {
+    transform: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .carousel-container {
+    cursor: normal;
+  }
+  .carousel-container:active {
+    cursor: normal;
+  }
+}
+
+.card {
+  transition: transform 0.2s ease;
+  will-change: transform;
+}

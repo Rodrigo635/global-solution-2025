@@ -5,6 +5,7 @@ from django.db import models
 
 # Create your models here.
 # Vale lembrar que não sei django e o chatGPT tem total direito sobre o programa abaixo e é dever de conserta-lo. por fvaor não pedir para eu consertar. abraços
+
 class Categoria(models.Model):
     nome = models.CharField(max_length=100, unique=True)
 

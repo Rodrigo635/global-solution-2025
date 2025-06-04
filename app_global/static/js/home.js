@@ -1,16 +1,9 @@
-// static/js/doacao.js
-
-function limitTextLength(){
-  const description = document.getElementsByClassName("card-text");
-  for (let i = 0; i < description.length; i++) {
-    if (description[i].innerHTML.length <= 90) continue;
-    description[i].innerHTML = description[i].innerHTML.substring(0, 90) + "..."
-  }
-}
+// static/js/home.js
 
 // Função para configurar cada carrossel com suporte touch
 function setupCarousel(carouselId) {
   const container = document.getElementById(`carousel-${carouselId}`);
+  console.log(container)
   const prevBtn = document.querySelector(`.carousel-prev[data-carousel="${carouselId}"]`);
   const nextBtn = document.querySelector(`.carousel-next[data-carousel="${carouselId}"]`);
 
@@ -102,7 +95,7 @@ function setupCarousel(carouselId) {
 // Registra/carrega todos os carrosseis
 document.addEventListener("DOMContentLoaded", () => {
   // Antes era só ["urgente", "sugestoes", "explorar"]
-  ["urgente", "sugestoes", "explorar", "alertas", "ocorridos"].forEach(setupCarousel);
+  ["alertas", "ocorridos"].forEach(setupCarousel);
 
   // Efeitos de hover para desktop
   if (!('ontouchstart' in window)) {
@@ -116,20 +109,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  limitTextLength();
-});
-
-document.getElementById('filtroCategoria').addEventListener('change', function () {
-  const categoria = this.value;
-
-  fetch(`/doacoes?categoria=${categoria}`, {
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest' 
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById('carousel-explorar').innerHTML = data.html;
-      limitTextLength();
-    });
 });

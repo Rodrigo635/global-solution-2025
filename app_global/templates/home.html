@@ -3,17 +3,17 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="../static/css/home.css">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 <section class="hero py-5 d-flex align-items-center">
     <div class="container my-5 py-5">
         <div class="row d-flex align-items-center justify-content-between">
             <div class="col-lg-6">
-                <h3 class="text-white fw-semibold">Lorem ipsum</h3>
-                <h1 class="text-white display-5 fw-semibold mt-2 mb-3">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit</h1>
-                <h4 class="mb-4 fw-normal text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    varius tempus scelerisque. Phasellus eu enim orci. </h4>
+                <h3 class="text-white fw-semibold">Fique por dentro</h3>
+                <h1 class="text-white display-5 fw-semibold mt-2 mb-3">Informações em tempo real sobre eventos
+                    climáticos e desastres ambientais</h1>
+                <h4 class="mb-4 fw-normal text-white">Receba alertas, veja rotas de evacuação e doe para ajudar pessoas
+                    afetadas por desastres.</h4>
                 <a href="#" id="btn-hero" class="btn btn-primary btn-estilizado btn-lg">Sobre esse projeto</a>
             </div>
             <div class="col-lg-6 text-center d-none d-lg-block">
@@ -24,7 +24,7 @@
 </section>
 
 <section class="container my-5" id="alertas">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
         <h2 class="my-title">Alertas</h2>
         <div class="d-flex align-items-center">
             <a href="#" class="me-3">Ver todos</a>
@@ -36,184 +36,142 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownFiltros">
                     <li><a class="dropdown-item" href="#">Mais recentes</a></li>
                     <li><a class="dropdown-item" href="#">Urgentes</a></li>
-                    <li><a class="dropdown-item" href="#">Não lidas</a></li>
+                    <li><a class="dropdown-item" href="#">Mais antigos</a></li>
                 </ul>
             </div>
         </div>
     </div>
+  
+    <div class="pt-0 pb-3">
+        <div class="position-relative">
+            <button
+                class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
+                data-carousel="alertas">
+                &#10094;
+            </button>
+            <div id="carousel-alertas" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
+                style="scroll-behavior: smooth">
+                {% for alerta in alertas %}
+                <div class="card evento-card">
+                    <div class="img-card">
+                        {% if alerta.imagem %}
+                        <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+                        {% else %}
+                        <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card"
+                            alt="{{ alerta.nome }}">
+                        {% endif %}
+                    </div>
 
-    <div id="alertsCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row gx-3">
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 1</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 1.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
+
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <div class="card-body__text">
+                            <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
+                            <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
+                            <p class="card-text text-muted mb-3">Data de início: {{ alerta.data_inicio }}</p>
+                            {% if alerta.data_fim %}
+                            <p class="card-text text-muted mb-3">Data de fim: {{ alerta.data_fim }}</p>
+                            {% endif %}
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 2</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 2.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 3</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 3.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
+
+                        <!-- Botões de ação -->
+                        <div class="d-flex gap-2 card-body__buttons">
+                            <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
+                                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
+                                <i class="fas fa-info-circle me-1"></i>Ver mais
+                            </a>
+
+                            {% if alerta.doar %}
+                            <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
+                                <i class="fas fa-heart me-1"></i>Quero ajudar
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="carousel-item">
-                <div class="row gx-3">
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 4</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 4.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 5</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 5.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 6</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 6.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
+            <button
+                class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
+                data-carousel="alertas">
+                &#10095;
+            </button>
         </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#alertsCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#alertsCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
     </div>
 </section>
 
-<section class="container my-5 pb-4" id="alertas">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="my-title">Acontecendo Agora</h2>
+<section class="container my-5 pb-4" id="agora">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="my-title">Ocorridos</h2>
         <div class="d-flex align-items-center">
             <a href="#" class="me-3">Ver todos</a>
             <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownFiltros"
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownFiltros2"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Filtros
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownFiltros">
                     <li><a class="dropdown-item" href="#">Mais recentes</a></li>
                     <li><a class="dropdown-item" href="#">Urgentes</a></li>
-                    <li><a class="dropdown-item" href="#">Não lidas</a></li>
+                    <li><a class="dropdown-item" href="#">Mais antigos</a></li>
                 </ul>
             </div>
         </div>
     </div>
+    <div class="pt-0 pb-3">
+        <div class="position-relative">
+            <button
+                class="btn btn-primary position-absolute start-0 top-50 translate-middle-y d-none d-md-block carousel-prev btn-estilizado btn-redondo"
+                data-carousel="ocorridos">
+                &#10094;
+            </button>
+            <div id="carousel-ocorridos" class="d-flex gap-3 py-3 position-relative px-md-5 carousel-container"
+                style="scroll-behavior: smooth">
+                {% for alerta in ocorridos %}
+                <div class="card evento-card">
+                    <div class="img-card">
+                        {% if alerta.imagem %}
+                        <img src="{{ alerta.imagem.url }}" class="img-fluid imagem-card" alt="{{ alerta.nome }}">
+                        {% else %}
+                        <img src="{% static alerta.imagem_padrao %}" class="img-fluid imagem-card"
+                            alt="{{ alerta.nome }}">
+                        {% endif %}
+                    </div>
 
-    <div id="alertsCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="row gx-3">
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 1</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 1.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
+
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <div class="card-body__text">
+                            <h5 class="card-title fw-bold text-dark mb-2">{{ alerta.nome }}</h5>
+                            <p class="card-text text-muted mb-1">{{ alerta.descricao }}</p>
+                            <p class="card-text text-muted mb-1">De {{ alerta.data_inicio }}</p>
+                            {% if alerta.data_fim %}
+                            <p class="card-text text-muted mb-3">até {{ alerta.data_fim }}</p>
+                            {% endif %}
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 2</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 2.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 3</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 3.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
+
+                        <!-- Botões de ação -->
+                        <div class="d-flex gap-2 card-body__buttons">
+                            <a href="{% url 'evento_detalhe' evento_id=alerta.id %}"
+                                class="btn btn-outline-primary flex-fill btn-estilizado text-white btn-redondo">
+                                <i class="fas fa-info-circle me-1"></i>Ver mais
+                            </a>
+                            {% if alerta.doar %}
+                            <a href="#" class="btn btn-danger flex-fill btn-redondo" target="_blank">
+                                <i class="fas fa-heart me-1"></i>Quero ajudar
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="carousel-item">
-                <div class="row gx-3">
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 4</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 4.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 5</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 5.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 bg-light text-center">
-                            <div class="card-body d-flex flex-column justify-content-center">
-                                <h5 class="card-title">Alerta 6</h5>
-                                <p class="card-text">Descrição ou resumo do alerta 6.</p>
-                                <a href="#" class="mt-auto btn btn-primary btn-sm btn-estilizado">Ver detalhes</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
+            <button
+                class="btn btn-primary position-absolute end-0 top-50 translate-middle-y d-none d-md-block carousel-next z-high btn-estilizado btn-redondo"
+                data-carousel="ocorridos">
+                &#10095;
+            </button>
         </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#alertsCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#alertsCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
     </div>
 </section>
 
@@ -224,9 +182,17 @@
                 <img src="{% static 'imgs/img-evento-climatico-desenho.jpg' %}" class="img-fluid rounded-3" alt="...">
             </div>
             <div class="col-12 col-lg-6">
-                <h2>Lorem ipsum dolor</h2>
+                <h2>Por que Monitorar Eventos Climáticos?</h2>
                 <h5 class="fw-normal">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lorem odio, pretium commodo dolor in, ornare bibendum odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla laoreet turpis at felis sodales pharetra eget a nibh. Suspendisse turpis sapien, maximus vitae nisl eu, sodales elementum nisi. Pellentesque non odio convallis, facilisis nisi nec, convallis ex. Suspendisse convallis arcu ligula, ut ultrices arcu interdum sed. 
+                    As mudanças climáticas intensificaram enchentes, tempestades e secas.
+                    Acompanhar alertas oficiais ajuda você a:
+                    <ul>
+                        <li>Proteger sua família e sua casa</li>
+                        <li>Planejar rotas seguras em situações de risco</li>
+                        <li>Entender sinais de emergência antes que seja tarde</li>
+                    </ul>
+                    Aqui, centralizamos avisos de órgãos competentes, dicas de segurança e caminhos para
+                    atuação comunitária em momentos críticos.
                 </h5>
             </div>
         </div>
@@ -239,7 +205,14 @@
             <div class="col-12 col-lg-6">
                 <h2 class="text-white">Ajude através de doações</h2>
                 <h5 class="text-white fw-normal">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus lorem odio, pretium commodo dolor in, ornare bibendum odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla laoreet turpis at felis sodales pharetra eget a nibh. Suspendisse turpis sapien, maximus vitae nisl eu, sodales elementum nisi. Pellentesque non odio convallis, facilisis nisi nec, convallis ex. Suspendisse convallis arcu ligula, ut ultrices arcu interdum sed. 
+                    Desastres naturais atingem famílias e comunidades. Sua contribuição pode:
+                    <ul>
+                        <li>Fornecer alimentação e abrigo a vítimas</li>
+                        <li>Arrecadar materiais de primeiros socorros</li>
+                        <li>Financiar reconstrução de áreas afetadas</li>
+                    </ul>
+                    Navegue pelas instituições parceiras e faça sua doação com segurança.
+                    Cada gesto muda uma vida.
                 </h5>
 
             </div>
@@ -252,7 +225,7 @@
 
 <section class="container mt-5" id="equipe">
     <h3 class="my-title text-center">Nosso Time</h3>
-    <h2 class="text-center my-title mb-4">Equipe de Desenvolvimento</h2>    
+    <h2 class="text-center my-title mb-4">Equipe de Desenvolvimento</h2>
 
     <div class="row d-flex align-items-center justify-content-center">
         <div class="col-6 col-md-4 col-lg my-2">
@@ -276,8 +249,8 @@
                 <img src="../static/imgs/miguel.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h4 class="my-title my-3">Miguel</h4>
-                    <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nulla adipisci
-                        voluptatem reiciendis possimus? Labore?</p>
+                    <p class="card-text">Sou estudante de Sistemas de Informação, apaixonado por tecnologia, programação e sempre buscando aprender mais para crescer profissionalmente.</p>
+
                     <div class="mt-5">
                         <a href="https://chatgpt.com/" target="_blank"><i
                                 class="fa-solid fa-globe icon-social mx-2"></i></a>
@@ -377,4 +350,6 @@
         </div>
     </div>
 </section>
+
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
