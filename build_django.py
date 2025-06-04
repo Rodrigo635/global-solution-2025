@@ -445,7 +445,7 @@ def main():
         print(f"❌ Python do venv não encontrado em {VENV_PYTHON}")
         sys.exit(1)
 
-    caminhos = ["app_contas", "app_doacoes"]
+    caminhos = ["app_contas", "app_rotas", "app_doacoes", "app_alertas"]
     for caminho in caminhos:
         print(f"🧹 Removendo migrações antigas em {caminho}/migrations...")
         run(DELETE_MIGRATIONS_CMD.format(caminho))
