@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 
+from app_global.models import Cidade
 
 # Create your models here.
 # Vale lembrar que não sei django e o chatGPT tem total direito sobre o programa abaixo e é dever de conserta-lo. por fvaor não pedir para eu consertar. abraços
@@ -28,12 +29,29 @@ class CustomUser(AbstractUser):
         },
         verbose_name='Nome de usuário'
     )
-
+    
     # Campos comuns a todos
     categorias = models.ManyToManyField('Categoria', blank=False)
     imagem = models.ImageField(upload_to='imagens/', blank=True, null=True)
-    cidade = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=10, choices=(('pessoa', 'Pessoa'), ('ong', 'ONG')))
+    
+    # Apenas cidade - estado e país são acessados via cidade.estado e cidade.estado.pais
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
+    
+    tipo = models.CharField(
+        max_length=10,
+        choices=(('pessoa', 'Pessoa'), ('ong', 'ONG'))
+    )
+    
+    @property
+    def estado(self):
+        return self.cidade.estado
+    
+    @property
+    def pais(self):
+        return self.cidade.estado.pais
+    
+    def __str__(self):
+        return self.username
 
 class GalleryImage(models.Model):
     image = models.ImageField(upload_to='ong_gallery/')
@@ -56,8 +74,7 @@ class OngProfile(models.Model):
     cnpj = models.CharField(max_length=18)
     descricao = models.TextField()
     telefone = models.CharField(max_length=20)
-    endereco = models.CharField(max_length=200)
-    estado = models.CharField(max_length=2)
+    rua = models.CharField(max_length=200)
     cep = models.CharField(max_length=8)
     bairro = models.CharField(max_length=100)
     numero = models.CharField(max_length=10)

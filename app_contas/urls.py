@@ -15,4 +15,5 @@ urlpatterns = [
     path('register/donor', registerDonor, name='registerDonor'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('carregar-estados/', carregar_estados, name='carregar_estados'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.http import JsonResponse
 from django.shortcuts import render
 from .forms import *
 from django.contrib.auth import get_user_model
@@ -94,8 +95,7 @@ def registerOng(request):
                         cnpj=form.cleaned_data['cnpj'],
                         descricao=form.cleaned_data['descricao'],
                         telefone=form.cleaned_data['telefone'],
-                        endereco=form.cleaned_data['endereco'],
-                        estado=form.cleaned_data['estado'],
+                        rua=form.cleaned_data['rua'],
                         cep=form.cleaned_data['cep'],
                         bairro=form.cleaned_data['bairro'],
                         numero=form.cleaned_data['numero'],
@@ -127,6 +127,14 @@ def registerOng(request):
         form = OngRegistrationForm()
     
     return render(request, 'registerOng.html', {'form': form})
+
+def carregar_estados(request):
+    """View para carregar estados via AJAX"""
+    pais_id = request.GET.get('pais_id')
+    estados = Estado.objects.filter(pais=pais_id).order_by('nome')
+    estados_list = [{'id': estado.id, 'nome': estado.nome} for estado in estados]
+    print(estados_list)
+    return JsonResponse({'estados': estados_list})
 
 def logout_view(request):
     auth_logout(request)
