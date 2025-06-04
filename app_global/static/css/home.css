@@ -78,6 +78,10 @@
   padding: 0 10px;
 }
 
+.card-img-container img{
+  width: 100%;
+}
+
 /* 3 cards por slide em telas grandes */
 @media (min-width: 992px) {
   .carousel-card {
