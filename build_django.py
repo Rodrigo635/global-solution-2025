@@ -16,10 +16,12 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 def run(command):
-    print(f"\n🛠️ Executando comando: {command}")
-    subprocess.run(command, shell=True, check=True)
-    print("✅ Comando finalizado com sucesso.")
-
+    try:
+        print(f"\n🛠️ Executando comando: {command}")
+        subprocess.run(command, shell=True, check=True)
+        print("✅ Comando finalizado com sucesso.")
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Erro ao executar o comando: {e}")
 
 def create_superuser():
     username = 'admin'

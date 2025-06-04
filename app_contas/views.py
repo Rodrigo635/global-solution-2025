@@ -136,6 +136,15 @@ def carregar_estados(request):
     print(estados_list)
     return JsonResponse({'estados': estados_list})
 
+# Na view carregar_cidades
+def carregar_cidades(request):
+    """View para carregar cidades via AJAX"""
+    estado_id = request.GET.get('estado_id')
+    cidades = Cidade.objects.filter(estado=estado_id).order_by('nome')
+    cidades_list = [{'id': cidade.id, 'nome': cidade.nome} for cidade in cidades]
+    print(cidades_list)
+    return JsonResponse({'cidades': cidades_list})
+
 def logout_view(request):
     auth_logout(request)
     return redirect('home')
