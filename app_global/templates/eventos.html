@@ -2,17 +2,14 @@
 {% load static %}
 
 {% block content %}
-<!-- Inclui o CSS base para cards e ajustes específicos de evento -->
 <link rel="stylesheet" href="{% static 'css/eventos.css' %}" />
 
 <section class="py-5">
   <div class="container my-lg-5">
     <h2 class="text-center my-4">Eventos Climáticos</h2>
 
-    <!-- ========== Formulário de Busca + Filtros ========== -->
     <form method="get" action="{% url 'eventos' %}">
       <div class="row g-2 align-items-center justify-content-center">
-        <!-- Barra de busca -->
         <div class="col-12 position-relative">
           <input
             type="search"
@@ -31,7 +28,6 @@
           </button>
         </div>
 
-        <!-- Filtro por País -->
         <div class="col-6 col-md-2">
           <select
             name="pais"
@@ -48,7 +44,6 @@
           </select>
         </div>
 
-        <!-- Filtro por Estado -->
         <div class="col-6 col-md-2">
           <select
             name="estado"
@@ -65,7 +60,6 @@
           </select>
         </div>
 
-        <!-- Filtro por Cidade -->
         <div class="col-6 col-md-2">
           <select
             name="cidade"
@@ -82,7 +76,6 @@
           </select>
         </div>
 
-        <!-- Filtro por Status (ativos / ocorridos / todos) -->
         <div class="col-6 col-md-2">
           <select
             name="status"
@@ -98,7 +91,6 @@
       </div>
     </form>
 
-    <!-- ========== Cards de Eventos ========== -->
     <div
       id="eventos-container"
       class="row row-cols-1 row-cols-md-2 row-cols-lg-4 d-flex justify-content-center g-4 py-4"
@@ -130,17 +122,19 @@
                 <div class="mt-3 d-flex justify-content-between">
                   <a
                     href="{% url 'evento_detalhe' evento.id %}"
-                    class="btn btn-outline-primary btn-sm flex-fill me-1"
+                    class="btn btn-primary btn-estilizado text-white btn-redondo flex-fill me-1"
                   >
-                    Ver mais
+                    <i class="fas fa-info-circle me-1"></i>Ver mais
                   </a>
+                  {% if evento.doar %}
                   <a
                     href="{{ evento.doar|default:'#' }}"
-                    class="btn btn-danger btn-sm flex-fill ms-1"
+                    class="btn btn-danger btn-redondo flex-fill ms-1"
                     {% if not evento.doar %}disabled{% endif %}
                   >
-                    Quero ajudar
+                    <i class="fas fa-heart me-1"></i>Quero ajudar
                   </a>
+                  {% endif %}
                 </div>
               </div>
             </div>
