@@ -437,7 +437,7 @@ def main():
         DELETE_DB_CMD = 'del db.sqlite3'
         DELETE_MIGRATIONS_CMD = 'del {}\\migrations\\0*.py'
     else:
-        VENV_PYTHON = os.path.join(os.getcwd(), 'venv', 'bin', 'python')
+        VENV_PYTHON = os.path.join(os.getcwd(), 'env', 'bin', 'python')
         DELETE_DB_CMD = 'rm -f db.sqlite3'
         DELETE_MIGRATIONS_CMD = 'rm -rf {}/migrations/0*.py'
 

@@ -136,7 +136,6 @@ def carregar_estados(request):
     print(estados_list)
     return JsonResponse({'estados': estados_list})
 
-# Na view carregar_cidades
 def carregar_cidades(request):
     """View para carregar cidades via AJAX"""
     estado_id = request.GET.get('estado_id')
