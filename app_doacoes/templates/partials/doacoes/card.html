@@ -18,15 +18,9 @@
         <a href="{% url 'doacoes:ong' ong.user.username %}" class="btn btn-outline-primary flex-fill">
             <i class="fas fa-info-circle me-1"></i>Ver mais
         </a>
-        {% if ong.site %}
         <a href="{{ ong.site }}" class="btn btn-success flex-fill" target="_blank">
             <i class="fas fa-heart me-1"></i>Quero doar
         </a>
-        {% else %}
-        <a href="#" class="btn btn-success flex-fill" target="_blank">
-            <i class="fas fa-heart me-1"></i>Quero doar
-        </a>
-        {% endif %}
         </div>
     </div>
 

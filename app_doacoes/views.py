@@ -60,7 +60,7 @@ def explorar(request):
             Q(user__username__icontains=query) |
             Q(descricao__icontains=query) |
             Q(user__categorias__nome__icontains=query) |
-            Q(user__cidade__icontains=query)
+            Q(user__cidade__nome__icontains=query)
         )
 
     if categoria_filtro and categoria_filtro != 'todas':
