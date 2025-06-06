@@ -75,12 +75,3 @@
   object-fit: cover;
   object-position: center;
 }
-
-.card-img-top {
-  height: 160px;
-  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
