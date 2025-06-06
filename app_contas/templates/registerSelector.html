@@ -1,9 +1,6 @@
-{% extends "index_login.html" %}
-{% load static %}
+{% extends "index_login.html" %} {% load static %} {% block content %}
 
-{% block content %}
-
-<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" href="{% static 'css/common.css' %}" />
 
 <section class="vh-100 d-flex align-items-center bg-light">
   <div class="container py-5">
@@ -11,28 +8,38 @@
       <div class="col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-sm border-0 rounded-4">
           <div class="card-body p-5 text-center">
-            
             <!-- Logo/Ícone -->
             <div class="mb-4">
-              <img src="{% static 'path/to/your-logo.png' %}" alt="Logo" width="80" class="mb-3">
+              <i class="fa-solid fa-globe fs-2"></i>
               <h2 class="fw-bold mb-1">Crie sua conta</h2>
               <p class="text-muted">Selecione o tipo de conta que deseja criar</p>
             </div>
-            
+
             <!-- Botões de seleção -->
             <div class="d-grid gap-3">
-              <a href="{% url 'contas:registerDonor' %}" class="btn btn-primary btn-lg py-3 rounded-3 text-decoration-none">
-                <i class="bi bi-person-heart me-2"></i> Sou Doador
+              <a
+                href="{% url 'contas:registerDonor' %}"
+                class="btn btn-primary btn-lg py-3 rounded-3 text-decoration-none"
+              >
+                <i class="bi bi-person-heart me-2"></i>
+                Sou Doador
               </a>
-              
-              <a href="{% url 'contas:registerOng' %}" class="btn btn-success btn-lg py-3 rounded-3 text-decoration-none">
-                <i class="bi bi-people-fill me-2"></i> Sou ONG
+
+              <a
+                href="{% url 'contas:registerOng' %}"
+                class="btn btn-success btn-lg py-3 rounded-3 text-decoration-none"
+              >
+                <i class="bi bi-people-fill me-2"></i>
+                Sou ONG
               </a>
             </div>
-            
+
             <!-- Link para login -->
             <div class="mt-4">
-              <p class="mb-0">Já possui uma conta? <a href="{% url 'contas:login' %}" class="text-decoration-none">Faça login</a></p>
+              <p class="mb-0">
+                Já possui uma conta?
+                <a href="{% url 'contas:login' %}" class="text-decoration-none">Faça login</a>
+              </p>
             </div>
           </div>
         </div>

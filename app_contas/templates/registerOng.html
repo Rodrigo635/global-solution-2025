@@ -191,12 +191,12 @@
                     </h5>
 
                     <div class="row g-3">
-                      <!-- CEP -->
+                      <!-- Estado -->
                       <div class="col-md-4">
                         <div class="form-floating">
-                          {{ form.cep|add_class:"form-control rounded-3" }}
-                          <label for="{{ form.cep.id_for_label }}">CEP</label>
-                          {{ form.cep.errors }}
+                          {{ form.pais|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.pais.id_for_label }}">Estado</label>
+                          {{ form.pais.errors }}
                         </div>
                       </div>
 
@@ -218,12 +218,21 @@
                         </div>
                       </div>
 
+                      <!-- CEP -->
+                      <div class="col-md-4">
+                        <div class="form-floating">
+                          {{ form.cep|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.cep.id_for_label }}">CEP</label>
+                          {{ form.cep.errors }}
+                        </div>
+                      </div>
+
                       <!-- Endereço -->
                       <div class="col-md-8">
                         <div class="form-floating">
-                          {{ form.endereco|add_class:"form-control rounded-3" }}
-                          <label for="{{ form.endereco.id_for_label }}">Rua</label>
-                          {{ form.endereco.errors }}
+                          {{ form.rua|add_class:"form-control rounded-3" }}
+                          <label for="{{ form.rua.id_for_label }}">Rua</label>
+                          {{ form.rua.errors }}
                         </div>
                       </div>
 
@@ -580,5 +589,5 @@
     </div>
   </div>
 </section>
-<script src="{% static 'js/imagePreview.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
 {% endblock %}

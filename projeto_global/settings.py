@@ -44,9 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_global',
-    'app_rotas',
     'app_doacoes',
-    'app_alertas',
     'app_contas',
 ]
 

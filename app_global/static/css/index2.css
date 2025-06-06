@@ -1,5 +1,6 @@
 :root {
   --azul-claro: #4261BA;
+  --azul: #354c94;
   --azul-escuro: #0D0C49;
   --cinza-claro: #D9D9D9;
 }
@@ -16,7 +17,7 @@ a {
 
 .main-header {
     background-color: var(--azul-escuro);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .logo-projeto {
@@ -25,4 +26,32 @@ a {
 
 .icon-usuario {
     font-size: 1.4rem;
+}
+
+.bg-cinza {
+    background-color: var(--cinza-claro);
+}
+
+.bg-azul {
+    background-color: var(--azul-claro);
+    border-color: var(--azul-claro);
+}
+
+.btn-estilizado {
+  background-color: var(--azul-claro);
+  border-color: var(--azul-claro);
+}
+
+.btn-estilizado:hover {
+  background-color: var(--azul);
+  border-color: var(--azul);
+}
+
+footer a.text-light:hover {
+  color: #0d6efd; 
+  text-decoration: none;
+}
+
+footer i.fab, footer i.bi {
+  transition: transform 0.2s, color 0.2s;
 }

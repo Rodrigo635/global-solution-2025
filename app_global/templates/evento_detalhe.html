@@ -1,0 +1,60 @@
+{% extends 'index2.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/evento_detalhe.css' %}" />
+
+<section class="min-vh-100 pt-5">
+    <div class="container my-lg-5 pt-5 px-0">
+        <div class="row  shadow-lg rounded-3 px-4 py-4">
+            <div class="col-12 col-lg-4">
+                {% if evento.imagem %}
+                <img src="{{ evento.imagem.url }}" class="img-fluid" alt="{{ evento.nome }}" id="banner-profile" />
+                {% else %}
+                <img src="{% static evento.imagem_padrao %}" class="img-fluid" alt="{{ evento.nome }}"
+                    id="banner-profile" />
+                {% endif %}
+            </div>
+            <div class="col-12 col-lg-8">
+                <h1 class="display-5 fw-bold mb-2 text-uppercase">
+                    {{ evento.nome }}
+                </h1>
+                <div class="info-card w-100">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h5 class="fw-normal">{{ evento.descricao }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <p><i class="fas fa-info-circle text-primary me-2"></i><strong>Tipo:</strong> {{ evento.get_tipo_display }}</p>
+                            <p><i class="fas fa-exclamation-triangle text-primary me-2"></i><strong>Urgente:</strong> {{ evento.urgente|yesno:"Sim,Não" }}</p>
+                            <p><i class="fas fa-calendar text-primary me-2"></i><strong>Data de início:</strong> {{ evento.data_inicio|date:"d/m/Y H:i" }}</p>
+                            {% if evento.data_fim %}
+                            <p><i class="fas fa-calendar text-primary me-2"></i><strong>Data de fim:</strong> {{ evento.data_fim|date:"d/m/Y H:i" }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <p><i class="fas fa-globe text-primary me-2"></i><strong>Países afetados:</strong> {{ evento.paises.all|join:", " }}</p>
+                            <p><i class="fas fa-globe-americas text-primary me-2"></i><strong>Estados afetados:</strong> {{ evento.estados.all|join:", " }}</p>
+                            <p><i class="fas fa-city text-primary me-2"></i><strong>Cidades afetadas:</strong> {{ evento.cidades.all|join:", " }}</p>
+                        </div>
+                    </div>
+
+                    {% if evento.doar %}
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="{{ evento.doar }}" target="_blank" class="btn btn-danger btn-lg">
+                                <i class="fas fa-heart me-2"></i>Quero Ajudar
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div><!-- col -->
+        </div><!-- row -->
+    </div>
+</section>
+
+{% endblock %}

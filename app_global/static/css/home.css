@@ -2,10 +2,107 @@
   background-color: black;
 }
 
-.btn-estilizado {
-  background-color: var(--azul-claro);
-  border-color: var(--azul-claro);
+.evento-card {
+  overflow: hidden;
+  width: 350px;
+  height: auto;
+  flex: 0 0 320px;
 }
+
+.img-card {
+  width: 100%;
+  padding: 15px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.imagem-card {
+  width: auto;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+/* CSS para melhorar experiência touch no carrossel */
+.carousel-container {
+  /* Remove a scrollbar padrão */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE e Edge */
+
+  /* Suaviza o scroll */
+  scroll-behavior: smooth;
+
+  /* Melhora performance no mobile */
+  -webkit-overflow-scrolling: touch;
+
+  /* Previne seleção de texto durante o arrasto */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btn-redondo {
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  z-index: 5 !important;
+}
+
+#carousel-alertas,
+#carousel-ocorridos {
+  overflow: auto !important;
+}
+
+.carousel-inner {
+  display: flex;
+}
+
+.carousel-item {
+  display: none;
+  transition: transform 0.6s ease;
+  width: 100%;
+}
+
+.carousel-item.active {
+  display: flex !important;
+}
+
+.carousel-card {
+  padding: 0 10px;
+}
+
+.card-img-container img{
+  width: 100%;
+}
+
+/* 3 cards por slide em telas grandes */
+@media (min-width: 992px) {
+  .carousel-card {
+    flex: 0 0 33.3333%;
+  }
+}
+
+/* 2 cards por slide em tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .carousel-card {
+    flex: 0 0 50%;
+  }
+}
+
+/* 1 card por slide em celulares */
+@media (max-width: 767.98px) {
+  .carousel-card {
+    flex: 0 0 100%;
+  }
+}
+
 
 @media screen and (max-width: 992px) {
   .hero {
@@ -14,4 +111,41 @@
     background-position: right;
     background-repeat: no-repeat;
   }
+}
+
+/* Melhora a área de toque nos botões para mobile */
+@media (max-width: 768px) {
+
+  .carousel-prev,
+  .carousel-next {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
+
+  /* Remove hover effects no mobile */
+  .card {
+    transition: none !important;
+  }
+
+  .card:hover {
+    transform: none !important;
+  }
+}
+
+/* Estados do cursor para desktop */
+@media (min-width: 769px) {
+  .carousel-container {
+    cursor: normal;
+  }
+
+  .carousel-container:active {
+    cursor: normal;
+  }
+}
+
+/* Smooth transitions para cards */
+.card {
+  transition: transform 0.2s ease;
+  will-change: transform;
 }
