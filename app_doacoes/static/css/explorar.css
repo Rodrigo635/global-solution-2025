@@ -38,7 +38,7 @@
 
 .card-img-top {
   height: 160px;
-  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  background: gray;
   position: relative;
   display: flex;
   align-items: center;
