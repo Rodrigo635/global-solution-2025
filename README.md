@@ -17,8 +17,8 @@ Certifique-se de ter os seguintes softwares instalados:
 **Via Git:**
 
 ```bash
-git clone https://github.com/seu-usuario/seu-projeto.git
-cd seu-projeto
+git clone https://github.com/Rodrigo635/global-solution-2025.git
+cd global-solution
 ```
 
 **Ou:** baixe o `.zip` do projeto e extraia, em seguida abra a pasta no terminal.
